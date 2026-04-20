@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CHORD_DATABASE } from '../../data/chords';
 import type { HarmonicFieldDegree } from '../../types/music';
 import PlayButton from '../shared/PlayButton/PlayButton';
@@ -12,11 +12,8 @@ interface ChordCardProps {
 
 const ChordCard = ({ degree, active = false }: ChordCardProps) => {
   const voicings = CHORD_DATABASE[degree.chordName] ?? [];
-  const [voicingIndex, setVoicingIndex] = useState(0);
-
-  useEffect(() => {
-    setVoicingIndex(0);
-  }, [degree.chordName]);
+  const [selected, setSelected] = useState({ chordName: degree.chordName, index: 0 });
+  const voicingIndex = selected.chordName === degree.chordName ? selected.index : 0;
 
   const current = voicings[voicingIndex];
 
@@ -62,7 +59,7 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
         <VoicingNav
           current={voicingIndex}
           total={voicings.length || 1}
-          onChange={setVoicingIndex}
+          onChange={(i) => setSelected({ chordName: degree.chordName, index: i })}
         />
         <PlayButton disabled ariaLabel={`Play ${degree.chordName}`} />
       </div>
