@@ -1,0 +1,849 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sonic Architect - Fretboard Theory</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#353534",
+              "on-tertiary-fixed-variant": "#004c6a",
+              "on-surface": "#e5e2e1",
+              "tertiary-fixed": "#c5e7ff",
+              "surface-container-high": "#2a2a2a",
+              "primary-fixed": "#ffddb8",
+              "on-secondary-fixed": "#1a1a2e",
+              "on-primary-fixed-variant": "#653e00",
+              tertiary: "#8fd5ff",
+              "outline-variant": "#534434",
+              "surface-container": "#201f1f",
+              "on-background": "#e5e2e1",
+              "on-tertiary-container": "#004966",
+              "on-surface-variant": "#d8c3ad",
+              "on-tertiary": "#00344a",
+              error: "#ffb4ab",
+              "inverse-primary": "#855300",
+              "on-secondary-fixed-variant": "#45455b",
+              "inverse-on-surface": "#313030",
+              "tertiary-fixed-dim": "#7fd0ff",
+              "on-primary-fixed": "#2a1700",
+              primary: "#ffc174",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-fixed-dim": "#ffb95f",
+              "secondary-fixed-dim": "#c6c4df",
+              secondary: "#c6c4df",
+              "on-secondary-container": "#b8b6d0",
+              "on-error": "#690005",
+              "secondary-fixed": "#e2e0fc",
+              outline: "#a08e7a",
+              "surface-dim": "#131313",
+              "primary-container": "#f59e0b",
+              "error-container": "#93000a",
+              background: "#131313",
+              "inverse-surface": "#e5e2e1",
+              surface: "#131313",
+              "surface-bright": "#3a3939",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#001e2d",
+              "surface-tint": "#ffb95f",
+              "surface-variant": "#353534",
+              "on-secondary": "#2f2e43",
+              "tertiary-container": "#1abdff",
+              "secondary-container": "#47475d",
+              "surface-container-low": "#1c1b1b",
+              "on-primary-container": "#613b00",
+              "on-primary": "#472a00",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            fontFamily: {
+              headline: ["Inter"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        background-color: #131313;
+        color: #e5e2e1;
+        font-family: "Inter", sans-serif;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .fretboard-string {
+        height: 1px;
+        background: rgba(216, 195, 173, 0.2);
+        position: relative;
+        width: 100%;
+      }
+      .fretboard-string:nth-child(4) {
+        height: 2px;
+      }
+      .fretboard-string:nth-child(5) {
+        height: 2px;
+      }
+      .fretboard-string:nth-child(6) {
+        height: 3px;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface">
+    <!-- 1. Top AppBar -->
+    <header
+      class="bg-[#131313] sticky top-0 z-50 flex justify-between items-center w-full px-8 h-16 border-b border-outline-variant/10"
+    >
+      <div class="flex items-center gap-4">
+        <button
+          class="text-primary hover:bg-surface-container-high p-2 rounded-lg transition-colors"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="text-xl font-black tracking-tighter text-amber-500">
+          Sonic Architect
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="text-zinc-400 hover:text-amber-400 transition-colors p-2"
+        >
+          <span class="material-symbols-outlined">tune</span>
+        </button>
+        <button
+          class="text-zinc-400 hover:text-amber-400 transition-colors p-2"
+        >
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+      </div>
+    </header>
+    <main class="max-w-[1000px] mx-auto px-8 py-12 space-y-16">
+      <!-- 2. SELECT ROOT Section -->
+      <section class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2
+            class="text-sm font-bold tracking-widest text-on-surface-variant uppercase"
+          >
+            Select Root
+          </h2>
+          <button
+            class="text-primary hover:bg-surface-container-high p-1 rounded transition-colors"
+          >
+            <span class="material-symbols-outlined text-lg">swap_horiz</span>
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-3 justify-start">
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            C
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            C#
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            D
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            D#
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            E
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            F
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            F#
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            G
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            G#
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-primary-container text-on-primary font-black scale-110 shadow-lg shadow-primary-container/40 ring-4 ring-primary-container/20"
+          >
+            A
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            A#
+          </button>
+          <button
+            class="w-14 h-14 rounded-full flex items-center justify-center bg-surface-container-low text-on-surface font-bold hover:bg-surface-container-high transition-all active:scale-95 border border-outline-variant/10"
+          >
+            B
+          </button>
+        </div>
+      </section>
+      <!-- 3. SCALE MODE Section -->
+      <section class="space-y-4 max-w-md">
+        <h2
+          class="text-sm font-bold tracking-widest text-on-surface-variant uppercase"
+        >
+          Scale Mode
+        </h2>
+        <div
+          class="flex p-1 bg-surface-container-lowest rounded-xl gap-1 border border-outline-variant/10"
+        >
+          <button
+            class="flex-1 py-3 px-4 bg-primary-container text-on-primary font-bold rounded-lg transition-all"
+          >
+            Major
+          </button>
+          <button
+            class="flex-1 py-3 px-4 text-on-surface-variant font-medium hover:text-on-surface rounded-lg transition-all"
+          >
+            Minor
+          </button>
+        </div>
+      </section>
+      <!-- 4. Harmonic Field Section -->
+      <section class="space-y-8">
+        <div class="flex items-center justify-between">
+          <h2 class="text-3xl font-black text-on-surface tracking-tight">
+            Harmonic Field
+          </h2>
+          <div class="flex gap-2">
+            <button
+              class="p-2 bg-surface-container rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button
+              class="p-2 bg-surface-container rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex overflow-x-auto gap-6 pb-6 hide-scrollbar snap-x">
+          <!-- Chord Card I -->
+          <div
+            class="min-w-[280px] snap-start p-6 bg-surface-container-high rounded-2xl border-2 border-primary-container/30 relative overflow-hidden group"
+          >
+            <div
+              class="absolute top-0 right-0 p-3 opacity-20 text-6xl font-black italic select-none text-on-surface"
+            >
+              I
+            </div>
+            <span
+              class="text-primary-container font-bold text-sm tracking-widest uppercase"
+              >I Degree</span
+            >
+            <h3 class="text-4xl font-black mt-1 mb-6">A</h3>
+            <div
+              class="bg-surface-container-lowest/50 p-4 rounded-xl mb-6 flex justify-center"
+            >
+              <svg
+                class="text-on-surface"
+                height="120"
+                viewbox="0 0 100 120"
+                width="100"
+              >
+                <rect
+                  fill="none"
+                  height="80"
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  width="80"
+                  x="10"
+                  y="20"
+                ></rect>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="10"
+                  x2="90"
+                  y1="40"
+                  y2="40"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="10"
+                  x2="90"
+                  y1="60"
+                  y2="60"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="10"
+                  x2="90"
+                  y1="80"
+                  y2="80"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="26"
+                  x2="26"
+                  y1="20"
+                  y2="100"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="42"
+                  x2="42"
+                  y1="20"
+                  y2="100"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="58"
+                  x2="58"
+                  y1="20"
+                  y2="100"
+                ></line>
+                <line
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  x1="74"
+                  x2="74"
+                  y1="20"
+                  y2="100"
+                ></line>
+                <circle cx="42" cy="50" fill="#f59e0b" r="4"></circle>
+                <circle cx="58" cy="50" fill="#f59e0b" r="4"></circle>
+                <circle cx="74" cy="50" fill="#f59e0b" r="4"></circle>
+                <text
+                  fill="currentColor"
+                  font-size="8"
+                  opacity="0.5"
+                  x="10"
+                  y="115"
+                >
+                  X O 2 2 2 O
+                </text>
+              </svg>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <button
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >arrow_back_ios</span
+                  >
+                </button>
+                <span
+                  class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                  >Voicing 1 of 3</span
+                >
+                <button
+                  class="text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-lg"
+                    >arrow_forward_ios</span
+                  >
+                </button>
+              </div>
+              <button
+                class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center hover:scale-110 transition-transform shadow-lg shadow-primary-container/20"
+              >
+                <span class="material-symbols-outlined fill-current"
+                  >volume_up</span
+                >
+              </button>
+            </div>
+          </div>
+          <!-- Other Chord Cards (Simplified for flow) -->
+          <div
+            class="min-w-[280px] snap-start p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10 hover:bg-surface-container transition-colors relative overflow-hidden group"
+          >
+            <div
+              class="absolute top-0 right-0 p-3 opacity-10 text-6xl font-black italic select-none text-on-surface"
+            >
+              ii
+            </div>
+            <span
+              class="text-on-surface-variant font-bold text-sm tracking-widest uppercase"
+              >ii Degree</span
+            >
+            <h3 class="text-4xl font-black mt-1 mb-6">Bm</h3>
+            <div
+              class="bg-surface-container-lowest/50 p-4 rounded-xl mb-6 flex justify-center"
+            >
+              <svg
+                class="text-on-surface-variant"
+                height="120"
+                viewbox="0 0 100 120"
+                width="100"
+              >
+                <rect
+                  fill="none"
+                  height="80"
+                  opacity="0.3"
+                  stroke="currentColor"
+                  stroke-width="0.5"
+                  width="80"
+                  x="10"
+                  y="20"
+                ></rect>
+                <circle cx="42" cy="70" fill="currentColor" r="4"></circle>
+              </svg>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span
+                  class="text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                  >Voicing 1 of 3</span
+                >
+              </div>
+              <button
+                class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center hover:bg-primary-container hover:text-on-primary transition-all"
+              >
+                <span class="material-symbols-outlined">volume_up</span>
+              </button>
+            </div>
+          </div>
+          <!-- Repeating cards to fill row -->
+          <div
+            class="min-w-[280px] snap-start p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10 relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 p-3 opacity-10 text-6xl font-black italic select-none"
+            >
+              iii
+            </div>
+            <span
+              class="text-on-surface-variant font-bold text-sm tracking-widest uppercase"
+              >iii Degree</span
+            >
+            <h3 class="text-4xl font-black mt-1 mb-6">C#m</h3>
+            <div
+              class="bg-surface-container-lowest/50 p-4 rounded-xl mb-6 flex justify-center h-[120px]"
+            ></div>
+          </div>
+          <div
+            class="min-w-[280px] snap-start p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10 relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 p-3 opacity-10 text-6xl font-black italic select-none"
+            >
+              IV
+            </div>
+            <span
+              class="text-on-surface-variant font-bold text-sm tracking-widest uppercase"
+              >IV Degree</span
+            >
+            <h3 class="text-4xl font-black mt-1 mb-6">D</h3>
+            <div
+              class="bg-surface-container-lowest/50 p-4 rounded-xl mb-6 flex justify-center h-[120px]"
+            ></div>
+          </div>
+          <div
+            class="min-w-[280px] snap-start p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10 relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 p-3 opacity-10 text-6xl font-black italic select-none"
+            >
+              V
+            </div>
+            <span
+              class="text-on-surface-variant font-bold text-sm tracking-widest uppercase"
+              >V Degree</span
+            >
+            <h3 class="text-4xl font-black mt-1 mb-6">E</h3>
+            <div
+              class="bg-surface-container-lowest/50 p-4 rounded-xl mb-6 flex justify-center h-[120px]"
+            ></div>
+          </div>
+        </div>
+      </section>
+      <!-- 5. Scale Explorer Section -->
+      <section class="space-y-10">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between gap-6"
+        >
+          <div>
+            <h2 class="text-3xl font-black text-on-surface tracking-tight">
+              Scale Explorer
+            </h2>
+            <p class="text-on-surface-variant text-sm mt-1">
+              A Major Scale Patterns
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-6">
+            <!-- Scale Type Toggles -->
+            <div
+              class="flex bg-surface-container-lowest rounded-lg p-1 border border-outline-variant/10"
+            >
+              <button
+                class="px-4 py-2 bg-surface-container-high text-primary font-bold text-sm rounded-md shadow-sm"
+              >
+                Major Scale
+              </button>
+              <button
+                class="px-4 py-2 text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors"
+              >
+                Pentatonic
+              </button>
+              <button
+                class="px-4 py-2 text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors"
+              >
+                Blues
+              </button>
+            </div>
+            <!-- Shape Selector -->
+            <div class="flex items-center gap-2">
+              <span
+                class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mr-2"
+                >Shape</span
+              >
+              <div class="flex gap-1">
+                <button
+                  class="w-8 h-8 rounded bg-primary-container text-on-primary font-bold text-sm shadow-md"
+                >
+                  1
+                </button>
+                <button
+                  class="w-8 h-8 rounded bg-surface-container-low text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors"
+                >
+                  2
+                </button>
+                <button
+                  class="w-8 h-8 rounded bg-surface-container-low text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors"
+                >
+                  3
+                </button>
+                <button
+                  class="w-8 h-8 rounded bg-surface-container-low text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors"
+                >
+                  4
+                </button>
+                <button
+                  class="w-8 h-8 rounded bg-surface-container-low text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors"
+                >
+                  5
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 12-Fret Guitar Fretboard -->
+        <div
+          class="bg-[#1a1a1a] rounded-3xl p-8 border border-outline-variant/10 overflow-x-auto hide-scrollbar shadow-2xl"
+        >
+          <div class="min-w-[900px]">
+            <!-- Fret Numbers -->
+            <div class="grid grid-cols-12 mb-8 px-4">
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/60"
+              >
+                1
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                2
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant"
+              >
+                3
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                4
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant"
+              >
+                5
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                6
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant"
+              >
+                7
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                8
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant"
+              >
+                9
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                10
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant/30"
+              >
+                11
+              </div>
+              <div
+                class="text-center text-xs font-black text-on-surface-variant"
+              >
+                12
+              </div>
+            </div>
+            <div class="relative py-4 flex flex-col gap-6">
+              <!-- Fret Wires -->
+              <div
+                class="absolute inset-0 grid grid-cols-12 pointer-events-none z-0"
+              >
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="border-r border-outline-variant/40 h-full"></div>
+                <div class="h-full"></div>
+              </div>
+              <!-- String 1 (High E) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[37.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-primary-container text-on-primary rounded-full flex items-center justify-center text-[10px] font-black border-2 border-surface-container-lowest"
+                >
+                  A
+                </div>
+                <div
+                  class="absolute left-[54.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  B
+                </div>
+                <div
+                  class="absolute left-[70.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  C#
+                </div>
+              </div>
+              <!-- String 2 (B) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[12.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  C#
+                </div>
+                <div
+                  class="absolute left-[29.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  D
+                </div>
+                <div
+                  class="absolute left-[45.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  E
+                </div>
+              </div>
+              <!-- String 3 (G) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[12.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-primary-container text-on-primary rounded-full flex items-center justify-center text-[10px] font-black border-2 border-surface-container-lowest"
+                >
+                  A
+                </div>
+                <div
+                  class="absolute left-[29.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  B
+                </div>
+              </div>
+              <!-- String 4 (D) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[12.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  E
+                </div>
+                <div
+                  class="absolute left-[29.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  F#
+                </div>
+                <div
+                  class="absolute left-[45.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  G#
+                </div>
+              </div>
+              <!-- String 5 (A) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[12.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  B
+                </div>
+                <div
+                  class="absolute left-[29.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  C#
+                </div>
+                <div
+                  class="absolute left-[45.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  D
+                </div>
+              </div>
+              <!-- String 6 (Low E) -->
+              <div class="fretboard-string z-10">
+                <div
+                  class="absolute left-[37.5%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-primary-container text-on-primary rounded-full flex items-center justify-center text-[10px] font-black border-2 border-surface-container-lowest"
+                >
+                  A
+                </div>
+                <div
+                  class="absolute left-[54.16%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  B
+                </div>
+                <div
+                  class="absolute left-[70.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-surface-container-lowest"
+                >
+                  C#
+                </div>
+                <div
+                  class="absolute left-[95.83%] -translate-x-1/2 -top-3.5 w-7 h-7 bg-primary-container text-on-primary rounded-full flex items-center justify-center text-[10px] font-black border-2 border-surface-container-lowest"
+                >
+                  A
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 6. THEORY NOTE and RELATIVE MINOR -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+        <div
+          class="p-8 bg-surface-container-low rounded-2xl border border-outline-variant/10 shadow-lg"
+        >
+          <h4
+            class="text-sm font-bold text-primary-container mb-4 uppercase tracking-widest"
+          >
+            Theory Note
+          </h4>
+          <p class="text-on-surface-variant text-base leading-relaxed">
+            The Major scale follows the interval pattern:
+            <span class="text-on-surface font-bold">W-W-H-W-W-W-H</span>. For A
+            Major, this results in three sharps (F#, C#, G#).
+          </p>
+        </div>
+        <div
+          class="p-8 bg-surface-container-low rounded-2xl border border-outline-variant/10 shadow-lg"
+        >
+          <h4
+            class="text-sm font-bold text-primary-container mb-4 uppercase tracking-widest"
+          >
+            Relative Minor
+          </h4>
+          <p class="text-on-surface-variant text-base leading-relaxed">
+            The relative minor of A Major is
+            <span class="text-on-surface font-bold">F# minor</span>. They share
+            the same key signature but start on a different tonal center.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="mt-20 py-12 px-8 border-t border-outline-variant/10 bg-[#0e0e0e] flex flex-col md:flex-row justify-between items-center gap-8"
+    >
+      <div class="flex flex-col items-center md:items-start">
+        <span class="text-lg font-bold text-amber-500">Sonic Architect</span>
+        <span class="text-xs text-zinc-500 uppercase tracking-widest"
+          >V1.0 Studio Edition</span
+        >
+      </div>
+      <div
+        class="flex gap-8 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500"
+      >
+        <a class="hover:text-amber-500 transition-colors" href="#"
+          >Help Center</a
+        >
+        <a class="hover:text-amber-500 transition-colors" href="#">Feedback</a>
+        <a class="hover:text-amber-500 transition-colors" href="#"
+          >Advanced Settings</a
+        >
+      </div>
+      <div class="flex gap-4">
+        <div
+          class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-zinc-400 hover:text-amber-500 transition-all cursor-pointer"
+        >
+          <span class="material-symbols-outlined">music_note</span>
+        </div>
+        <div
+          class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-zinc-400 hover:text-amber-500 transition-all cursor-pointer"
+        >
+          <span class="material-symbols-outlined">waves</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

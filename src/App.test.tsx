@@ -1,0 +1,18 @@
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+describe('App', () => {
+  it('renders without crashing', () => {
+    render(<App />);
+    expect(screen.getByText('Fretforge')).toBeInTheDocument();
+  });
+
+  it('defaults to C Major', () => {
+    render(<App />);
+    const cButton = screen.getByText('C');
+    expect(cButton).toHaveAttribute('aria-pressed', 'true');
+    const majorButton = screen.getByText('Major');
+    expect(majorButton).toHaveClass('bg-accent');
+  });
+});
