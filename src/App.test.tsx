@@ -10,8 +10,8 @@ describe('App', () => {
 
   it('defaults to C Major', () => {
     render(<App />);
-    const cButton = screen.getByText('C');
-    expect(cButton).toHaveAttribute('aria-pressed', 'true');
+    const cButton = screen.getByRole('button', { pressed: true });
+    expect(cButton).toHaveTextContent('C');
     const majorButton = screen.getByText('Major');
     expect(majorButton).toHaveClass('bg-accent');
   });

@@ -4,6 +4,7 @@ import type { ScaleMode } from './types/music';
 import Header from './components/Header/Header';
 import RootSelector from './components/RootSelector/RootSelector';
 import ScaleModeToggle from './components/ScaleModeToggle/ScaleModeToggle';
+import HarmonicField from './components/HarmonicField/HarmonicField';
 
 const App = () => {
   const [selectedRoot, setSelectedRoot] = useState<Note>('C');
@@ -26,6 +27,8 @@ const App = () => {
           </h2>
           <ScaleModeToggle mode={scaleMode} onModeChange={setScaleMode} />
         </section>
+
+        <HarmonicField selectedRoot={selectedRoot} scaleMode={scaleMode} />
       </main>
     </>
   );
