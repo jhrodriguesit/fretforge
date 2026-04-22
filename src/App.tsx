@@ -18,7 +18,11 @@ const App = () => {
           <h2 className="text-sm font-bold tracking-widest text-text-secondary uppercase">
             Select Root
           </h2>
-          <RootSelector selectedRoot={selectedRoot} onRootChange={setSelectedRoot} />
+          <RootSelector
+            selectedRoot={selectedRoot}
+            mode={scaleMode}
+            onRootChange={setSelectedRoot}
+          />
         </section>
 
         <section className="space-y-4">

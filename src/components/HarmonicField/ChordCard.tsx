@@ -42,12 +42,12 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
         {degree.numeral} Degree
       </span>
       <h3 className="text-4xl font-black font-mono mt-1 mb-6">
-        {degree.chordName}
+        {degree.displayName}
       </h3>
 
       <div className="bg-surface-lowest/50 p-4 rounded-xl mb-6 flex justify-center min-h-[160px]">
         {current ? (
-          <ChordDiagram voicing={current} chordName={degree.chordName} />
+          <ChordDiagram voicing={current} chordName={degree.displayName} />
         ) : (
           <span className="text-text-muted text-xs self-center">
             No voicing available
@@ -61,7 +61,7 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
           total={voicings.length || 1}
           onChange={(i) => setSelected({ chordName: degree.chordName, index: i })}
         />
-        <PlayButton disabled ariaLabel={`Play ${degree.chordName}`} />
+        <PlayButton disabled ariaLabel={`Play ${degree.displayName}`} />
       </div>
     </div>
   );

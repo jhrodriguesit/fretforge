@@ -1,5 +1,6 @@
-import { CHROMATIC_NOTES, type Note } from '../data/notes';
-import { SCALE_INTERVALS } from '../data/intervals';
+import type { Note } from '../data/notes';
+import { getKeySpelling } from '../data/keySignatures';
+import { nameToPitchClass, type NoteName } from '../data/noteNames';
 import { NUMERALS_BY_MODE, QUALITIES_BY_MODE } from '../data/harmonicField';
 import type {
   ChordQuality,
@@ -16,24 +17,25 @@ const QUALITY_SUFFIX: Record<ChordQuality, string> = {
 export const getChordKey = (root: string, quality: ChordQuality): string =>
   `${root}${QUALITY_SUFFIX[quality]}`;
 
-export const getScale = (root: Note, type: ScaleMode): string[] => {
-  const rootIdx = CHROMATIC_NOTES.indexOf(root);
-  return SCALE_INTERVALS[type].map(
-    (semitone) => CHROMATIC_NOTES[(rootIdx + semitone) % 12],
-  );
-};
+export const getScale = (root: Note, type: ScaleMode): NoteName[] =>
+  getKeySpelling(root, type);
 
 export const getHarmonicField = (
   root: Note,
   mode: ScaleMode,
 ): HarmonicFieldDegree[] => {
-  const scale = getScale(root, mode);
+  const spelling = getScale(root, mode);
   const qualities = QUALITIES_BY_MODE[mode];
   const numerals = NUMERALS_BY_MODE[mode];
-  return scale.map((note, i) => ({
-    degree: i + 1,
-    numeral: numerals[i],
-    chordName: getChordKey(note, qualities[i]),
-    quality: qualities[i],
-  }));
+  return spelling.map((spelledRoot, i) => {
+    const quality = qualities[i];
+    const pc = nameToPitchClass(spelledRoot);
+    return {
+      degree: i + 1,
+      numeral: numerals[i],
+      chordName: getChordKey(pc, quality),
+      displayName: getChordKey(spelledRoot, quality),
+      quality,
+    };
+  });
 };
