@@ -47,4 +47,5 @@ src/
 - Active toggle: `bg-accent text-accent-text font-bold`
 - Cards (Phase 2+): `bg-surface rounded-2xl border border-border/10 p-6`
 - Design reference: `docs/design-reference.html`
+- Music Theory Reference: `/docs/music-theory-reference.md`
 - Full spec: `PLANNING.md`

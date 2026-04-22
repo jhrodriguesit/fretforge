@@ -14,6 +14,9 @@ An interactive web app for guitar players to study music theory through harmonic
 ## Design Reference
 See `docs/design-reference.html` for the target look and feel. This is the visual north star — match its colors, spacing, typography, component sizes, and layout patterns as closely as possible when building components.
 
+## Music Theory Reference
+See `/docs/music-theory-reference.md` for the harmonic fields and music theory reference. This is the source of truth when making decisions about music theory.
+
 ## Design System
 
 ### Colors
@@ -97,36 +100,6 @@ src/
 - Pure functions preferred — components should be thin UI wrappers
 - Single responsibility: data files export data, utils export functions, components render UI
 
-## Music Theory Reference
-
-### Major Harmonic Field
-| Degree | Quality | Numeral | Example (A Major) |
-|--------|---------|---------|-------------------|
-| I | Major | I | A |
-| II | minor | ii | Bm |
-| III | minor | iii | C#m |
-| IV | Major | IV | D |
-| V | Major | V | E |
-| VI | minor | vi | F#m |
-| VII | diminished | vii° | G#dim |
-
-### Natural Minor Harmonic Field
-| Degree | Quality | Numeral | Example (A minor) |
-|--------|---------|---------|-------------------|
-| I | minor | i | Am |
-| II | diminished | ii° | Bdim |
-| III | Major | III | C |
-| IV | minor | iv | Dm |
-| V | minor | v | Em |
-| VI | Major | VI | F |
-| VII | Major | VII | G |
-
-### Scale Formulas (semitones from root)
-- Major: 0, 2, 4, 5, 7, 9, 11
-- Natural Minor: 0, 2, 3, 5, 7, 8, 10
-- Major Pentatonic: 0, 2, 4, 7, 9
-- Minor Pentatonic: 0, 3, 5, 7, 10
-- Blues: 0, 3, 5, 6, 7, 10
 
 ### Guitar Standard Tuning
 Low → High: E2, A2, D3, G3, B3, E4
