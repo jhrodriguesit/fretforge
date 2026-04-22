@@ -16,14 +16,32 @@ npm run lint     # ESLint
 ```
 src/
 ├── App.tsx              # Root state: selectedRoot (Note), scaleMode (ScaleMode)
-├── index.css            # Tailwind @theme — all design tokens
-├── data/notes.ts        # CHROMATIC_NOTES array + Note type
-├── types/music.ts       # ScaleMode type
+├── index.css            # Tailwind @theme + scrollbar-hidden utility
+├── data/                # Pure music-theory data
+│   ├── notes.ts         # CHROMATIC_NOTES array + Note type
+│   ├── intervals.ts     # Interval definitions
+│   ├── noteNames.ts     # Enharmonic spelling helpers
+│   ├── keySignatures.ts # Key → sharps/flats map
+│   ├── harmonicField.ts # Diatonic degree generator
+│   └── chords.ts        # CHORD_DATABASE: voicings per chord name
+├── utils/
+│   └── musicTheory.ts   # getHarmonicField(root, mode) etc.
+├── types/music.ts       # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── components/          # Feature folders: Name/Name.tsx + Name.test.tsx
 │   ├── Header/
-│   ├── RootSelector/    # Props: selectedRoot, onRootChange
-│   └── ScaleModeToggle/ # Props: mode, onModeChange
+│   ├── RootSelector/            # Props: selectedRoot, onRootChange
+│   ├── ScaleModeToggle/         # Props: mode, onModeChange
+│   ├── HarmonicField/           # HarmonicField, ChordCard, ChordDiagram (SVG)
+│   └── shared/
+│       ├── PlayButton/          # Disabled placeholder until Phase 5 audio
+│       └── VoicingNav/          # Cycle through voicings per chord
 ```
+
+## Current Status
+
+- Phase 1 ✓ Foundation, RootSelector, ScaleModeToggle
+- Phase 2 ✓ HarmonicField with scrollable ChordCards, SVG ChordDiagram (portrait layout, multi-voicing, barre support, base-fret label for positions >1)
+- Phase 3+ not started (Scale Explorer, Theory Notes, Audio, Exercise Mode)
 
 ## Conventions
 
