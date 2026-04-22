@@ -7,6 +7,7 @@ const DEGREE: HarmonicFieldDegree = {
   degree: 1,
   numeral: 'I',
   chordName: 'C',
+  displayName: 'C',
   quality: 'major',
 };
 

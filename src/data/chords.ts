@@ -40,8 +40,7 @@ const dimAString = (n: number): ChordVoicing => {
 // Diminished triad, root on low E string at fret N: root, b5, root, b3
 const dimEString = (n: number): ChordVoicing => {
   const base = n === 0 ? 1 : n;
-  const fingers =
-    n === 0 ? [1, 2, 4, 3, 0, 0] : [1, 2, 4, 3, 0, 0];
+  const fingers = n === 0 ? [0, 1, 2, 0, 0, 0] : [1, 2, 4, 3, 0, 0];
   return v([n, n + 1, n + 2, n, -1, -1], fingers, base);
 };
 
@@ -144,7 +143,7 @@ export const CHORD_DATABASE: Record<string, ChordVoicing[]> = {
   // ---------------- F (low-E fret 1, A fret 8) ----------------
   F: [
     eShapeMaj(1),
-    v([-1, -1, 3, 2, 1, 1], [0, 0, 4, 3, 1, 2], 1, [1]), // top-4 partial F
+    v([-1, -1, 3, 2, 1, 1], [0, 0, 4, 3, 1, 1], 1, [1]), // top-4 partial F
     aShapeMaj(8),
   ],
   Fm: [
@@ -162,7 +161,7 @@ export const CHORD_DATABASE: Record<string, ChordVoicing[]> = {
   'F#': [
     eShapeMaj(2),
     aShapeMaj(9),
-    v([-1, -1, 4, 3, 2, 2], [0, 0, 4, 3, 1, 2], 2, [2]),
+    v([-1, -1, 4, 3, 2, 2], [0, 0, 4, 3, 1, 1], 2, [2]),
   ],
   'F#m': [
     eShapeMin(2),
@@ -196,7 +195,7 @@ export const CHORD_DATABASE: Record<string, ChordVoicing[]> = {
   'G#': [
     eShapeMaj(4),
     aShapeMaj(11),
-    v([-1, -1, 6, 5, 4, 4], [0, 0, 4, 3, 1, 2], 4, [4]),
+    v([-1, -1, 6, 5, 4, 4], [0, 0, 4, 3, 1, 1], 4, [4]),
   ],
   'G#m': [
     eShapeMin(4),
@@ -230,7 +229,7 @@ export const CHORD_DATABASE: Record<string, ChordVoicing[]> = {
   'A#': [
     aShapeMaj(1),
     eShapeMaj(6),
-    v([-1, -1, 3, 3, 3, 1], [0, 0, 2, 3, 4, 1], 1, [1]),
+    v([-1, -1, 3, 3, 3, 1], [0, 0, 2, 3, 4, 1], 1),
   ],
   'A#m': [
     aShapeMin(1),
@@ -240,14 +239,14 @@ export const CHORD_DATABASE: Record<string, ChordVoicing[]> = {
   'A#dim': [
     dimAString(1),
     dimEString(6),
-    dim7AString(1),
+    dim7AString(13),
   ],
 
   // ---------------- B (A fret 2, low-E fret 7) ----------------
   B: [
     aShapeMaj(2),
     eShapeMaj(7),
-    v([-1, -1, 4, 4, 4, 2], [0, 0, 2, 3, 4, 1], 2, [2]),
+    v([-1, -1, 4, 4, 4, 2], [0, 0, 2, 3, 4, 1], 2),
   ],
   Bm: [
     aShapeMin(2),

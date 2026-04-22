@@ -13,7 +13,9 @@ export interface HarmonicFieldDegree {
   degree: number;
   numeral: string;
   chordName: string;
+  displayName: string;
   quality: ChordQuality;
 }
 
 export type { Note } from '../data/notes';
+export type { NoteName } from '../data/noteNames';

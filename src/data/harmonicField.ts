@@ -7,5 +7,5 @@ export const QUALITIES_BY_MODE: Record<ScaleMode, ChordQuality[]> = {
 
 export const NUMERALS_BY_MODE: Record<ScaleMode, string[]> = {
   major: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'],
-  minor: ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'],
+  minor: ['i', 'ii°', '♭III', 'iv', 'v', '♭VI', '♭VII'],
 };
