@@ -8,7 +8,7 @@ interface ChordDiagramProps {
 const GRID_LEFT = 14;
 const GRID_RIGHT = 86;
 const GRID_TOP = 24;
-const FRET_HEIGHT = 18;
+const FRET_HEIGHT = 22;
 const NUM_FRETS = 4;
 const STRING_COUNT = 6;
 
@@ -20,14 +20,14 @@ const fretY = (fretIndex: number) => GRID_TOP + fretIndex * FRET_HEIGHT;
 const ChordDiagram = ({ voicing, chordName }: ChordDiagramProps) => {
   const { frets, fingers, baseFret } = voicing;
   // diagram string order: low E on left → high E on right (same as frets[0..5])
-  const nutHeight = baseFret === 1 ? 3 : 0.8;
+  const nutHeight = baseFret === 1 ? 4 : 1.2;
   const gridBottom = fretY(NUM_FRETS);
 
   return (
     <svg
-      viewBox="0 0 100 140"
+      viewBox="0 0 100 150"
       width="110"
-      height="154"
+      height="170"
       role="img"
       aria-label={`${chordName} chord diagram`}
       className="text-text-primary"
@@ -53,8 +53,8 @@ const ChordDiagram = ({ voicing, chordName }: ChordDiagramProps) => {
           y1={fretY(i + 1)}
           y2={fretY(i + 1)}
           stroke="currentColor"
-          strokeWidth={0.6}
-          opacity={0.4}
+          strokeWidth={1.2}
+          opacity={0.9}
         />
       ))}
 
@@ -67,19 +67,18 @@ const ChordDiagram = ({ voicing, chordName }: ChordDiagramProps) => {
           y1={GRID_TOP}
           y2={gridBottom}
           stroke="currentColor"
-          strokeWidth={i === 0 ? 1.2 : 0.6}
-          opacity={i === 0 ? 0.7 : 0.4}
+          strokeWidth={i === 0 ? 1.6 : 1.2}
         />
       ))}
 
       {/* base fret label (e.g. "5ª") shown above top-left when position is higher on the neck */}
       {baseFret > 1 && (
         <text
-          x={stringX(0) - 4}
+          x={0}
           y={GRID_TOP - 4}
           fontSize="9"
           fill="currentColor"
-          textAnchor="end"
+          textAnchor="start"
           fontFamily="JetBrains Mono, monospace"
           fontWeight="bold"
           data-testid="base-fret-label"
