@@ -59,7 +59,7 @@ const HarmonicField = ({ selectedRoot, scaleMode }: HarmonicFieldProps) => {
 
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto gap-6 pb-6 snap-x"
+        className="flex overflow-x-auto gap-6 pb-6 snap-x scrollbar-hidden"
         data-testid="harmonic-field-scroll"
       >
         {degrees.map((degree) => (

@@ -45,7 +45,7 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
         {degree.displayName}
       </h3>
 
-      <div className="bg-surface-lowest/50 p-4 rounded-xl mb-6 flex justify-center min-h-[160px]">
+      <div className="bg-surface-lowest/50 p-4 rounded-xl mb-6 flex justify-center min-h-[180px]">
         {current ? (
           <ChordDiagram voicing={current} chordName={degree.displayName} />
         ) : (
