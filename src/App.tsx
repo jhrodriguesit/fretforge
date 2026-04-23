@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import RootSelector from './components/RootSelector/RootSelector';
 import ScaleModeToggle from './components/ScaleModeToggle/ScaleModeToggle';
 import HarmonicField from './components/HarmonicField/HarmonicField';
+import ScaleExplorer from './components/ScaleExplorer/ScaleExplorer';
 
 const App = () => {
   const [selectedRoot, setSelectedRoot] = useState<Note>('C');
@@ -33,6 +34,8 @@ const App = () => {
         </section>
 
         <HarmonicField selectedRoot={selectedRoot} scaleMode={scaleMode} />
+
+        <ScaleExplorer selectedRoot={selectedRoot} />
       </main>
     </>
   );
