@@ -10,9 +10,12 @@ describe('App', () => {
 
   it('defaults to C Major', () => {
     render(<App />);
-    const cButton = screen.getByRole('button', { pressed: true });
-    expect(cButton).toHaveTextContent('C');
-    const majorButton = screen.getByText('Major');
-    expect(majorButton).toHaveClass('bg-accent');
+    const pressedButtons = screen.getAllByRole('button', { pressed: true });
+    expect(pressedButtons).toHaveLength(1);
+    expect(pressedButtons[0]).toHaveTextContent('C');
+    const majorButton = screen
+      .getAllByRole('button', { name: 'Major' })
+      .find((b) => b.classList.contains('bg-accent'));
+    expect(majorButton).toBeDefined();
   });
 });
