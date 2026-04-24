@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { getScale, getHarmonicField, getChordKey } from './musicTheory';
+import {
+  getScale,
+  getHarmonicField,
+  getChordKey,
+  getIntervalPattern,
+  getRelativeKey,
+  getKeySignature,
+} from './musicTheory';
 
 describe('getChordKey', () => {
   it('major has no suffix', () => {
@@ -100,5 +107,53 @@ describe('getHarmonicField', () => {
   it('minor numerals include flat accidentals', () => {
     const numerals = getHarmonicField('A', 'minor').map((d) => d.numeral);
     expect(numerals).toEqual(['i', 'ii°', '♭III', 'iv', 'v', '♭VI', '♭VII']);
+  });
+});
+
+describe('getIntervalPattern', () => {
+  it('major scale is W-W-H-W-W-W-H', () => {
+    expect(getIntervalPattern('major')).toBe('W-W-H-W-W-W-H');
+  });
+  it('minor scale is W-H-W-W-H-W-W', () => {
+    expect(getIntervalPattern('minor')).toBe('W-H-W-W-H-W-W');
+  });
+  it('major pentatonic uses WH for minor thirds', () => {
+    expect(getIntervalPattern('majorPentatonic')).toBe('W-W-WH-W-WH');
+  });
+  it('minor pentatonic', () => {
+    expect(getIntervalPattern('minorPentatonic')).toBe('WH-W-W-WH-W');
+  });
+});
+
+describe('getRelativeKey', () => {
+  it('A major → F# minor', () => {
+    expect(getRelativeKey('A', 'major')).toEqual({ root: 'F#', mode: 'minor' });
+  });
+  it('A minor → C major', () => {
+    expect(getRelativeKey('A', 'minor')).toEqual({ root: 'C', mode: 'major' });
+  });
+  it('C major → A minor', () => {
+    expect(getRelativeKey('C', 'major')).toEqual({ root: 'A', mode: 'minor' });
+  });
+  it('E minor → G major', () => {
+    expect(getRelativeKey('E', 'minor')).toEqual({ root: 'G', mode: 'major' });
+  });
+});
+
+describe('getKeySignature', () => {
+  it('C major has no sharps or flats', () => {
+    expect(getKeySignature('C', 'major')).toEqual({ sharps: [], flats: [] });
+  });
+  it('A minor has no sharps or flats', () => {
+    expect(getKeySignature('A', 'minor')).toEqual({ sharps: [], flats: [] });
+  });
+  it('A major has three sharps: F#, C#, G#', () => {
+    const { sharps, flats } = getKeySignature('A', 'major');
+    expect(flats).toEqual([]);
+    expect(sharps).toHaveLength(3);
+    expect(sharps).toEqual(expect.arrayContaining(['F#', 'C#', 'G#']));
+  });
+  it('F major has one flat: Bb', () => {
+    expect(getKeySignature('F', 'major')).toEqual({ sharps: [], flats: ['Bb'] });
   });
 });

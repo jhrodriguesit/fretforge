@@ -34,7 +34,8 @@ src/
 │   ├── RootSelector/            # Props: selectedRoot, onRootChange
 │   ├── ScaleModeToggle/         # Props: mode, onModeChange
 │   ├── HarmonicField/           # HarmonicField, ChordCard, ChordDiagram (SVG)
-│   ├── ScaleExplorer/           # ScaleExplorer, Fretboard (SVG, CAGED shapes, blue-note highlight)
+│   ├── ScaleExplorer/           # ScaleExplorer, Fretboard (SVG, CAGED shapes, key-aware note spelling, blue-note highlight)
+│   ├── TheoryNotes/             # Interval pattern + relative key info cards
 │   └── shared/
 │       ├── PlayButton/          # Disabled placeholder until Phase 5 audio
 │       └── VoicingNav/          # Cycle through voicings per chord
@@ -44,8 +45,9 @@ src/
 
 - Phase 1 ✓ Foundation, RootSelector, ScaleModeToggle
 - Phase 2 ✓ HarmonicField with scrollable ChordCards, SVG ChordDiagram (portrait layout, multi-voicing, barre support, base-fret label for positions >1)
-- Phase 3 ✓ ScaleExplorer with CAGED shape selector, SVG Fretboard, scales (major, minor, major/minor pentatonic, blues = minor pentatonic blues with ♭5 highlighted)
-- Phase 4+ not started (Theory Notes, Audio, Exercise Mode)
+- Phase 3 ✓ ScaleExplorer with CAGED shape selector, SVG Fretboard, scales (major, minor, major/minor pentatonic, blues = minor pentatonic blues with ♭5 highlighted), key-aware note spelling (Bb in D Minor, not A#)
+- Phase 4 ✓ TheoryNotes with interval pattern + key signature + relative major/minor cards; scale tab state lifted to App so TheoryNotes reacts to it
+- Phase 5+ not started (Audio, Exercise Mode)
 
 ## Conventions
 

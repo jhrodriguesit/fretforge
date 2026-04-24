@@ -9,7 +9,8 @@ An interactive web app for guitar players to study music theory through harmonic
 - **Root Selector** — pick any of the 12 chromatic notes as the current key.
 - **Scale Mode Toggle** — switch between major and minor tonalities for the harmonic field.
 - **Harmonic Field** — scrollable cards showing the diatonic chords of the selected key, each with an SVG chord diagram supporting multi-voicing navigation, barre chords, and base-fret labels for higher positions.
-- **Scale Explorer** — SVG fretboard with five CAGED-style shapes for major, minor, major/minor pentatonic, and blues (minor pentatonic blues, with the ♭5 "blue note" highlighted).
+- **Scale Explorer** — SVG fretboard with five CAGED-style shapes for major, minor, major/minor pentatonic, and blues (minor pentatonic blues, with the ♭5 "blue note" highlighted). Notes are rendered with key-aware spelling (e.g. `Bb` in D Minor, never `A#`).
+- **Theory Notes** — two info cards below the Scale Explorer. The first explains the scale's interval pattern (with a W/H/WH legend) and the current key signature; the second names the relative major/minor and notes the shared key signature. Both update live with the selected root, mode, and scale type.
 
 ## Tech Stack
 
@@ -50,6 +51,7 @@ src/
     ├── ScaleModeToggle/
     ├── HarmonicField/     # Chord cards + SVG chord diagrams
     ├── ScaleExplorer/     # SVG fretboard with CAGED shapes
+    ├── TheoryNotes/       # Interval pattern + relative key info cards
     └── shared/            # PlayButton, VoicingNav
 ```
 
@@ -69,6 +71,6 @@ Every push to `main` triggers `.github/workflows/deploy.yml`, which builds and p
 - [x] Phase 1: Foundation + Root Selector + Mode Toggle
 - [x] Phase 2: Harmonic Field + Chord Cards + Chord Diagrams
 - [x] Phase 3: Scale Explorer + Fretboard Visualization
-- [ ] Phase 4: Theory Notes
+- [x] Phase 4: Theory Notes
 - [ ] Phase 5: Audio Engine (Tone.js)
 - [ ] Phase 6: Exercise Mode

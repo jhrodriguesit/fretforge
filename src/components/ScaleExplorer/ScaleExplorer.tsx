@@ -12,6 +12,8 @@ import Fretboard from './Fretboard';
 
 interface ScaleExplorerProps {
   selectedRoot: Note;
+  tab: ScaleTab;
+  onTabChange: (tab: ScaleTab) => void;
 }
 
 const TABS: ScaleTab[] = [
@@ -22,8 +24,7 @@ const TABS: ScaleTab[] = [
   'blues',
 ];
 
-const ScaleExplorer = ({ selectedRoot }: ScaleExplorerProps) => {
-  const [tab, setTab] = useState<ScaleTab>('major');
+const ScaleExplorer = ({ selectedRoot, tab, onTabChange }: ScaleExplorerProps) => {
   const [shapeId, setShapeId] = useState<number>(1);
 
   const scaleType: ScaleType = tab === 'blues' ? 'minorBlues' : tab;
@@ -56,7 +57,7 @@ const ScaleExplorer = ({ selectedRoot }: ScaleExplorerProps) => {
               <button
                 key={t}
                 type="button"
-                onClick={() => setTab(t)}
+                onClick={() => onTabChange(t)}
                 className={`px-3 py-1.5 text-sm rounded-md transition-colors cursor-pointer ${
                   tab === t
                     ? 'bg-surface-elevated text-accent font-bold shadow-sm'
