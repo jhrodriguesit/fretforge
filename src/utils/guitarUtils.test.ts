@@ -85,6 +85,53 @@ describe('getScalePositions', () => {
   });
 });
 
+describe('FretboardPosition displayName (key-aware spelling)', () => {
+  const collectNames = (root: Note, scaleType: 'major' | 'minor' | 'majorPentatonic' | 'minorPentatonic' | 'minorBlues') =>
+    new Set(
+      CAGED_SHAPES.flatMap((s) =>
+        getScalePositions(root, scaleType, s).map((p) => p.displayName),
+      ),
+    );
+
+  it('D minor spells the 6th as Bb, never A#', () => {
+    const names = collectNames('D', 'minor');
+    expect(names.has('Bb')).toBe(true);
+    expect(names.has('A#')).toBe(false);
+  });
+
+  it('F major spells the 4th as Bb, never A#', () => {
+    const names = collectNames('F', 'major');
+    expect(names.has('Bb')).toBe(true);
+    expect(names.has('A#')).toBe(false);
+  });
+
+  it('A major spells accidentals as sharps (C#, F#, G#)', () => {
+    const names = collectNames('A', 'major');
+    expect(names.has('C#')).toBe(true);
+    expect(names.has('F#')).toBe(true);
+    expect(names.has('G#')).toBe(true);
+    expect(names.has('Db')).toBe(false);
+  });
+
+  it('E major spells the 3rd as G# and 7th as D#, not flats', () => {
+    const names = collectNames('E', 'major');
+    expect(names.has('G#')).toBe(true);
+    expect(names.has('D#')).toBe(true);
+  });
+
+  it('A minor blues spells ♭5 as Eb (flat of the 5th), not D#', () => {
+    const names = collectNames('A', 'minorBlues');
+    expect(names.has('Eb')).toBe(true);
+    expect(names.has('D#')).toBe(false);
+  });
+
+  it('D minor blues spells ♭5 as Ab, not G#', () => {
+    const names = collectNames('D', 'minorBlues');
+    expect(names.has('Ab')).toBe(true);
+    expect(names.has('G#')).toBe(false);
+  });
+});
+
 describe('getFretRange', () => {
   it('always spans exactly 8 frets', () => {
     const roots: Note[] = ['A', 'E', 'C', 'F#', 'B', 'G'];

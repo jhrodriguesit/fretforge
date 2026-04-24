@@ -108,6 +108,6 @@ Low → High: E2, A2, D3, G3, B3, E4
 - [x] Phase 1: Foundation + Root Selector + Mode Toggle
 - [x] Phase 2: Harmonic Field + Chord Cards + Chord Diagrams
 - [x] Phase 3: Scale Explorer + Fretboard Visualization
-- [ ] Phase 4: Theory Notes
+- [x] Phase 4: Theory Notes
 - [ ] Phase 5: Audio Engine (Tone.js)
 - [ ] Phase 6: Exercise Mode

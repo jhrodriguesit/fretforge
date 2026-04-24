@@ -4,6 +4,9 @@ import {
   type ScaleShape,
   type ScaleType,
 } from '../data/scales';
+import { getKeySpelling } from '../data/keySignatures';
+import { nameToPitchClass, type NoteName } from '../data/noteNames';
+import type { ScaleMode } from '../types/music';
 
 /** Standard tuning, low-to-high: E A D G B E. Index = string number. */
 const STRING_OPEN_PC: Note[] = ['E', 'A', 'D', 'G', 'B', 'E'];
@@ -38,6 +41,7 @@ export interface FretboardPosition {
   string: number;
   fret: number;
   note: Note;
+  displayName: NoteName;
   isRoot: boolean;
   isBlueNote: boolean;
 }
@@ -45,6 +49,30 @@ export interface FretboardPosition {
 const buildScalePitchSet = (root: Note, scaleType: ScaleType): Set<number> => {
   const rootPc = pitchClassIndex(root);
   return new Set(SCALE_INTERVALS[scaleType].map((i) => (rootPc + i) % 12));
+};
+
+const spellingModeFor = (scaleType: ScaleType): ScaleMode =>
+  scaleType === 'major' || scaleType === 'majorPentatonic' ? 'major' : 'minor';
+
+const flatOfFifth = (fifth: NoteName): NoteName => {
+  if (fifth.endsWith('#')) return fifth.slice(0, -1);
+  return `${fifth}b`;
+};
+
+const buildScaleSpelling = (
+  root: Note,
+  scaleType: ScaleType,
+): Map<number, NoteName> => {
+  const spelling = getKeySpelling(root, spellingModeFor(scaleType));
+  const map = new Map<number, NoteName>();
+  for (const name of spelling) {
+    map.set(pitchClassIndex(nameToPitchClass(name)), name);
+  }
+  if (scaleType === 'minorBlues') {
+    const flatFive = flatOfFifth(spelling[4]);
+    map.set(pitchClassIndex(nameToPitchClass(flatFive)), flatFive);
+  }
+  return map;
 };
 
 export const getScalePositions = (
@@ -58,6 +86,7 @@ export const getScalePositions = (
   const scalePcs = buildScalePitchSet(root, scaleType);
   const rootPc = pitchClassIndex(root);
   const bluePc = scaleType === 'minorBlues' ? (rootPc + 6) % 12 : -1;
+  const spelling = buildScaleSpelling(root, scaleType);
 
   const positions: FretboardPosition[] = [];
   for (let s = 0; s < 6; s++) {
@@ -69,6 +98,7 @@ export const getScalePositions = (
           string: s,
           fret: f,
           note,
+          displayName: spelling.get(pc) ?? note,
           isRoot: pc === rootPc,
           isBlueNote: pc === bluePc,
         });

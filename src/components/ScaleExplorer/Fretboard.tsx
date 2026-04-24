@@ -162,7 +162,7 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
                 fill={textFill}
                 fontFamily="JetBrains Mono, monospace"
               >
-                {p.note}
+                {p.displayName}
               </text>
             </g>
           );
