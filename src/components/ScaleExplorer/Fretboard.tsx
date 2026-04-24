@@ -133,8 +133,16 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
         .map((p) => {
           const cx = noteX(p.fret);
           const cy = stringY(p.string);
-          const fill = p.isRoot ? '#F5A623' : '#FFFFFF';
-          const textFill = p.isRoot ? '#472A00' : '#0D0D0D';
+          const fill = p.isRoot
+            ? '#F5A623'
+            : p.isBlueNote
+              ? '#4FA3E3'
+              : '#FFFFFF';
+          const textFill = p.isRoot
+            ? '#472A00'
+            : p.isBlueNote
+              ? '#0D2638'
+              : '#0D0D0D';
           return (
             <g key={`pos-${p.string}-${p.fret}`}>
               <circle

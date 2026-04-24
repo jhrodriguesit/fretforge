@@ -22,31 +22,11 @@ const TABS: ScaleTab[] = [
   'blues',
 ];
 
-type Tonality = 'major' | 'minor';
-
-const tonalityOfTab = (tab: ScaleTab): Tonality | null => {
-  if (tab === 'major' || tab === 'majorPentatonic') return 'major';
-  if (tab === 'minor' || tab === 'minorPentatonic') return 'minor';
-  return null;
-};
-
-const resolveScaleType = (tab: ScaleTab, lastTonality: Tonality): ScaleType => {
-  if (tab !== 'blues') return tab;
-  return lastTonality === 'major' ? 'majorBlues' : 'minorBlues';
-};
-
 const ScaleExplorer = ({ selectedRoot }: ScaleExplorerProps) => {
   const [tab, setTab] = useState<ScaleTab>('major');
-  const [lastTonality, setLastTonality] = useState<Tonality>('major');
   const [shapeId, setShapeId] = useState<number>(1);
 
-  const onTab = (next: ScaleTab) => {
-    setTab(next);
-    const t = tonalityOfTab(next);
-    if (t) setLastTonality(t);
-  };
-
-  const scaleType = resolveScaleType(tab, lastTonality);
+  const scaleType: ScaleType = tab === 'blues' ? 'minorBlues' : tab;
   const shape = CAGED_SHAPES.find((s) => s.id === shapeId) ?? CAGED_SHAPES[0];
 
   const positions = useMemo(
@@ -76,7 +56,7 @@ const ScaleExplorer = ({ selectedRoot }: ScaleExplorerProps) => {
               <button
                 key={t}
                 type="button"
-                onClick={() => onTab(t)}
+                onClick={() => setTab(t)}
                 className={`px-3 py-1.5 text-sm rounded-md transition-colors cursor-pointer ${
                   tab === t
                     ? 'bg-surface-elevated text-accent font-bold shadow-sm'

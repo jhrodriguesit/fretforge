@@ -23,15 +23,18 @@ src/
 │   ├── noteNames.ts     # Enharmonic spelling helpers
 │   ├── keySignatures.ts # Key → sharps/flats map
 │   ├── harmonicField.ts # Diatonic degree generator
-│   └── chords.ts        # CHORD_DATABASE: voicings per chord name
+│   ├── chords.ts        # CHORD_DATABASE: voicings per chord name
+│   └── scales.ts        # ScaleType, SCALE_INTERVALS, CAGED_SHAPES, labels
 ├── utils/
-│   └── musicTheory.ts   # getHarmonicField(root, mode) etc.
+│   ├── musicTheory.ts   # getHarmonicField(root, mode) etc.
+│   └── guitarUtils.ts   # getScalePositions, getFretRange, getNoteAtFret
 ├── types/music.ts       # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── components/          # Feature folders: Name/Name.tsx + Name.test.tsx
 │   ├── Header/
 │   ├── RootSelector/            # Props: selectedRoot, onRootChange
 │   ├── ScaleModeToggle/         # Props: mode, onModeChange
 │   ├── HarmonicField/           # HarmonicField, ChordCard, ChordDiagram (SVG)
+│   ├── ScaleExplorer/           # ScaleExplorer, Fretboard (SVG, CAGED shapes, blue-note highlight)
 │   └── shared/
 │       ├── PlayButton/          # Disabled placeholder until Phase 5 audio
 │       └── VoicingNav/          # Cycle through voicings per chord
@@ -41,7 +44,8 @@ src/
 
 - Phase 1 ✓ Foundation, RootSelector, ScaleModeToggle
 - Phase 2 ✓ HarmonicField with scrollable ChordCards, SVG ChordDiagram (portrait layout, multi-voicing, barre support, base-fret label for positions >1)
-- Phase 3+ not started (Scale Explorer, Theory Notes, Audio, Exercise Mode)
+- Phase 3 ✓ ScaleExplorer with CAGED shape selector, SVG Fretboard, scales (major, minor, major/minor pentatonic, blues = minor pentatonic blues with ♭5 highlighted)
+- Phase 4+ not started (Theory Notes, Audio, Exercise Mode)
 
 ## Conventions
 

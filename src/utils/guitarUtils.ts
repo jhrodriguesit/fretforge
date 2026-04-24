@@ -39,6 +39,7 @@ export interface FretboardPosition {
   fret: number;
   note: Note;
   isRoot: boolean;
+  isBlueNote: boolean;
 }
 
 const buildScalePitchSet = (root: Note, scaleType: ScaleType): Set<number> => {
@@ -56,6 +57,7 @@ export const getScalePositions = (
   const endFret = rootFret + shape.endOffset;
   const scalePcs = buildScalePitchSet(root, scaleType);
   const rootPc = pitchClassIndex(root);
+  const bluePc = scaleType === 'minorBlues' ? (rootPc + 6) % 12 : -1;
 
   const positions: FretboardPosition[] = [];
   for (let s = 0; s < 6; s++) {
@@ -68,6 +70,7 @@ export const getScalePositions = (
           fret: f,
           note,
           isRoot: pc === rootPc,
+          isBlueNote: pc === bluePc,
         });
       }
     }
