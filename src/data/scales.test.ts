@@ -18,10 +18,9 @@ describe('CAGED_SHAPES', () => {
 });
 
 describe('SCALE_INTERVALS', () => {
-  it('defines six scale types', () => {
+  it('defines five scale types', () => {
     expect(Object.keys(SCALE_INTERVALS).sort()).toEqual([
       'major',
-      'majorBlues',
       'majorPentatonic',
       'minor',
       'minorBlues',
@@ -49,7 +48,6 @@ describe('SCALE_INTERVALS', () => {
     expect(SCALE_INTERVALS.minor).toHaveLength(7);
     expect(SCALE_INTERVALS.majorPentatonic).toHaveLength(5);
     expect(SCALE_INTERVALS.minorPentatonic).toHaveLength(5);
-    expect(SCALE_INTERVALS.majorBlues).toHaveLength(6);
     expect(SCALE_INTERVALS.minorBlues).toHaveLength(6);
   });
 });

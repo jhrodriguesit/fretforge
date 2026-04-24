@@ -75,13 +75,13 @@ describe('getScalePositions', () => {
     }
   });
 
-  it('C major blues includes the blue note E♭ (D#)', () => {
+  it('A minor blues includes the blue note ♭5 (D#/E♭)', () => {
     const notes = new Set(
       CAGED_SHAPES.flatMap((s) =>
-        getScalePositions('C', 'majorBlues', s).map((p) => p.note),
+        getScalePositions('A', 'minorBlues', s).map((p) => p.note),
       ),
     );
-    expect(notes.has('D#')).toBe(true); // D# = E♭
+    expect(notes.has('D#')).toBe(true);
   });
 });
 

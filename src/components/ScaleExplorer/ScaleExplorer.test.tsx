@@ -38,18 +38,14 @@ describe('ScaleExplorer', () => {
     expect(screen.getByText('C Minor Pentatonic Patterns')).toBeInTheDocument();
   });
 
-  it('Blues follows Major context when Major Pentatonic was the last pick', () => {
+  it('Blues tab always shows the minor pentatonic blues scale', () => {
     render(<ScaleExplorer selectedRoot="C" />);
     fireEvent.click(screen.getByRole('button', { name: 'Major Pentatonic' }));
     fireEvent.click(screen.getByRole('button', { name: 'Blues' }));
-    expect(screen.getByText('C Major Blues Patterns')).toBeInTheDocument();
-  });
-
-  it('Blues follows Minor context when Minor Pentatonic was the last pick', () => {
-    render(<ScaleExplorer selectedRoot="C" />);
+    expect(screen.getByText('C Blues Patterns')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Minor Pentatonic' }));
     fireEvent.click(screen.getByRole('button', { name: 'Blues' }));
-    expect(screen.getByText('C Minor Blues Patterns')).toBeInTheDocument();
+    expect(screen.getByText('C Blues Patterns')).toBeInTheDocument();
   });
 
   it('marks the selected shape', () => {
