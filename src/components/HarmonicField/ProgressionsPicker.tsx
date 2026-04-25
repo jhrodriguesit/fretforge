@@ -74,11 +74,37 @@ const ProgressionsPicker = ({
               }}
             >
               <div
+                className="serif"
                 style={{
-                  fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: 11,
-                  letterSpacing: '0.15em',
+                  fontSize: 20,
+                  lineHeight: 1.1,
+                  letterSpacing: '0.02em',
+                }}
+              >
+                {p.numerals.map((n, i) => {
+                  const isLower = /[a-z]/.test(n);
+                  return (
+                    <span key={i}>
+                      <span style={{ fontSize: isLower ? '1.4em' : '1em' }}>
+                        {n}
+                      </span>
+                      {i < p.numerals.length - 1 && (
+                        <span style={{ margin: '0 0.35em' }}>·</span>
+                      )}
+                    </span>
+                  );
+                })}
+              </div>
+              <div
+                className="font-mono"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: '0.18em',
                   textTransform: 'uppercase',
+                  marginTop: 4,
+                  color: active
+                    ? 'var(--color-paper-2)'
+                    : 'var(--color-ink-2)',
                 }}
               >
                 {p.name}
@@ -86,11 +112,12 @@ const ProgressionsPicker = ({
               {p.example && (
                 <div
                   style={{
-                    fontSize: 12,
+                    fontSize: 11,
                     marginTop: 2,
                     color: active
                       ? 'var(--color-paper-2)'
                       : 'var(--color-ink-2)',
+                    opacity: 0.8,
                   }}
                 >
                   {p.example}
