@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { HarmonicFieldDegree, ScaleMode } from '../../types/music';
 import {
   PROGRESSION_STYLES,
@@ -26,12 +26,6 @@ const ProgressionsPicker = ({
   const [selectedId, setSelectedId] = useState<string>(
     all.find((p) => p.style === 'pop')?.id ?? all[0]?.id ?? '',
   );
-
-  useEffect(() => {
-    if (!filtered.find((p) => p.id === selectedId)) {
-      setSelectedId(filtered[0]?.id ?? '');
-    }
-  }, [filtered, selectedId]);
 
   const selected = filtered.find((p) => p.id === selectedId) ?? filtered[0];
 
