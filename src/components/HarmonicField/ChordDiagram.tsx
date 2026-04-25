@@ -30,7 +30,7 @@ const ChordDiagram = ({ voicing, chordName }: ChordDiagramProps) => {
       height="170"
       role="img"
       aria-label={`${chordName} chord diagram`}
-      className="text-text-primary"
+      style={{ color: 'var(--color-ink)' }}
     >
       <title>{chordName}</title>
 

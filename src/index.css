@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0D0D0D;
-  --color-surface: #1A1A1A;
-  --color-surface-elevated: #222222;
-  --color-border: #2A2A2A;
-  --color-accent: #F5A623;
-  --color-accent-glow: rgba(245, 166, 35, 0.3);
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #888888;
-  --color-text-muted: #555555;
-  --color-surface-lowest: #0E0E0E;
-  --color-surface-low: #1C1B1B;
-  --color-accent-text: #472A00;
+  --color-paper: #f4efe6;
+  --color-paper-2: #ece5d6;
+  --color-rule: #d9cfbb;
+  --color-ink: #1a1714;
+  --color-ink-2: #5a4e42;
+  --color-accent: oklch(0.62 0.14 40);
+  --color-accent-on: #ffffff;
+  --color-brass: oklch(0.72 0.09 85);
 
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+}
+
+:root {
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
 }
 
 html {
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,6 +33,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 @utility scrollbar-hidden {

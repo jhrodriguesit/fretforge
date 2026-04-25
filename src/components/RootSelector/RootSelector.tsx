@@ -1,6 +1,6 @@
-import { CHROMATIC_NOTES, type Note } from "../../data/notes";
-import { getKeySpelling } from "../../data/keySignatures";
-import type { ScaleMode } from "../../types/music";
+import { CHROMATIC_NOTES, type Note } from '../../data/notes';
+import { getKeySpelling } from '../../data/keySignatures';
+import type { ScaleMode } from '../../types/music';
 
 interface RootSelectorProps {
   selectedRoot: Note;
@@ -10,21 +10,28 @@ interface RootSelectorProps {
 
 const RootSelector = ({ selectedRoot, mode, onRootChange }: RootSelectorProps) => {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-1.5">
       {CHROMATIC_NOTES.map((note) => {
         const isSelected = note === selectedRoot;
         const label = getKeySpelling(note, mode)[0];
         return (
           <button
             key={note}
+            type="button"
             onClick={() => onRootChange(note)}
             aria-pressed={isSelected}
             aria-label={label}
-            className={`w-14 h-14 rounded-full flex items-center justify-center font-mono transition-all active:scale-95 cursor-pointer ${
-              isSelected
-                ? "bg-accent text-accent-text font-black scale-110 shadow-lg shadow-accent-glow ring-4 ring-accent/20"
-                : "bg-surface-low text-text-primary font-bold border border-border/10 hover:bg-surface-elevated"
-            }`}
+            className="cursor-pointer transition-[filter] hover:brightness-95"
+            style={{
+              minWidth: 44,
+              padding: '10px 0',
+              border: '1px solid var(--color-ink)',
+              background: isSelected ? 'var(--color-ink)' : 'transparent',
+              color: isSelected ? 'var(--color-paper)' : 'var(--color-ink)',
+              fontFamily: 'Instrument Serif, Georgia, serif',
+              fontSize: 20,
+              borderRadius: 'var(--radius-pill)',
+            }}
           >
             {label}
           </button>

@@ -31,7 +31,7 @@ export const getNoteAtFret = (stringIndex: number, fret: number): Note => {
   return CHROMATIC_NOTES[(open + fret) % 12];
 };
 
-const rootFretOnLowE = (root: Note): number => {
+export const rootFretOnLowE = (root: Note): number => {
   const rootPc = pitchClassIndex(root);
   const lowEPc = pitchClassIndex('E');
   return (rootPc - lowEPc + 12) % 12;
@@ -75,14 +75,12 @@ const buildScaleSpelling = (
   return map;
 };
 
-export const getScalePositions = (
+export const getScalePositionsInRange = (
   root: Note,
   scaleType: ScaleType,
-  shape: ScaleShape,
+  startFret: number,
+  endFret: number,
 ): FretboardPosition[] => {
-  const rootFret = rootFretOnLowE(root);
-  const startFret = Math.max(0, rootFret + shape.startOffset);
-  const endFret = rootFret + shape.endOffset;
   const scalePcs = buildScalePitchSet(root, scaleType);
   const rootPc = pitchClassIndex(root);
   const bluePc = scaleType === 'minorBlues' ? (rootPc + 6) % 12 : -1;
@@ -90,7 +88,7 @@ export const getScalePositions = (
 
   const positions: FretboardPosition[] = [];
   for (let s = 0; s < 6; s++) {
-    for (let f = startFret; f <= endFret; f++) {
+    for (let f = Math.max(0, startFret); f <= endFret; f++) {
       const note = getNoteAtFret(s, f);
       const pc = pitchClassIndex(note);
       if (scalePcs.has(pc)) {
@@ -106,6 +104,17 @@ export const getScalePositions = (
     }
   }
   return positions;
+};
+
+export const getScalePositions = (
+  root: Note,
+  scaleType: ScaleType,
+  shape: ScaleShape,
+): FretboardPosition[] => {
+  const rootFret = rootFretOnLowE(root);
+  const startFret = Math.max(0, rootFret + shape.startOffset);
+  const endFret = rootFret + shape.endOffset;
+  return getScalePositionsInRange(root, scaleType, startFret, endFret);
 };
 
 /**
