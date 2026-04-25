@@ -28,12 +28,19 @@ const VoicingNav = ({ current, total, onChange }: VoicingNavProps) => {
           type="button"
           onClick={prev}
           aria-label="Previous voicing"
-          className="text-text-secondary hover:text-accent transition-colors cursor-pointer"
+          className="cursor-pointer transition-[filter] hover:brightness-90"
         >
           <ChevronLeft />
         </button>
       )}
-      <span className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+      <span
+        className="font-mono uppercase"
+        style={{
+          fontSize: 10,
+          letterSpacing: '0.2em',
+          color: 'var(--color-ink-2)',
+        }}
+      >
         Voicing {current + 1} of {total}
       </span>
       {showArrows && (
@@ -41,7 +48,7 @@ const VoicingNav = ({ current, total, onChange }: VoicingNavProps) => {
           type="button"
           onClick={next}
           aria-label="Next voicing"
-          className="text-text-secondary hover:text-accent transition-colors cursor-pointer"
+          className="cursor-pointer transition-[filter] hover:brightness-90"
         >
           <ChevronRight />
         </button>

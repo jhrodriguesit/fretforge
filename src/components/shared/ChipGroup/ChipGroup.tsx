@@ -1,24 +1,22 @@
-import type { ScaleMode } from '../../types/music';
-
-interface ScaleModeToggleProps {
-  mode: ScaleMode;
-  onModeChange: (mode: ScaleMode) => void;
+interface ChipGroupProps<T extends string> {
+  options: Array<[T, string]>;
+  value: T;
+  onChange: (value: T) => void;
 }
 
-const OPTIONS: Array<[ScaleMode, string]> = [
-  ['major', 'Major'],
-  ['minor', 'Minor'],
-];
-
-const ScaleModeToggle = ({ mode, onModeChange }: ScaleModeToggleProps) => (
+const ChipGroup = <T extends string>({
+  options,
+  value,
+  onChange,
+}: ChipGroupProps<T>) => (
   <div className="flex flex-wrap gap-1.5">
-    {OPTIONS.map(([val, label]) => {
-      const active = val === mode;
+    {options.map(([val, label]) => {
+      const active = val === value;
       return (
         <button
           key={val}
           type="button"
-          onClick={() => onModeChange(val)}
+          onClick={() => onChange(val)}
           aria-pressed={active}
           className="cursor-pointer transition-[filter] hover:brightness-95"
           style={{
@@ -40,4 +38,4 @@ const ScaleModeToggle = ({ mode, onModeChange }: ScaleModeToggleProps) => (
   </div>
 );
 
-export default ScaleModeToggle;
+export default ChipGroup;

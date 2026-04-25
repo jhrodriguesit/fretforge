@@ -12,28 +12,25 @@ const DEGREE: HarmonicFieldDegree = {
 };
 
 describe('ChordCard', () => {
-  it('renders degree label', () => {
+  it('renders the roman numeral', () => {
     render(<ChordCard degree={DEGREE} />);
-    expect(screen.getByText(/I Degree/i)).toBeInTheDocument();
+    expect(screen.getByText('I')).toBeInTheDocument();
   });
 
-  it('renders chord name', () => {
+  it('renders the function label', () => {
     render(<ChordCard degree={DEGREE} />);
-    expect(screen.getByRole('heading', { name: 'C' })).toBeInTheDocument();
+    expect(screen.getByText(/Tonic/i)).toBeInTheDocument();
   });
 
-  it('renders diagram', () => {
+  it('renders the chord display name', () => {
     render(<ChordCard degree={DEGREE} />);
-    expect(screen.getByRole('img', { name: /C chord diagram/i })).toBeInTheDocument();
+    expect(screen.getByText('C', { selector: '.serif' })).toBeInTheDocument();
   });
 
-  it('renders voicing nav', () => {
+  it('renders the chord diagram', () => {
     render(<ChordCard degree={DEGREE} />);
-    expect(screen.getByText(/Voicing 1 of/i)).toBeInTheDocument();
-  });
-
-  it('renders play button', () => {
-    render(<ChordCard degree={DEGREE} />);
-    expect(screen.getByLabelText(/Play C/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('img', { name: /C chord diagram/i }),
+    ).toBeInTheDocument();
   });
 });

@@ -61,8 +61,8 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
         if (m.double) {
           return (
             <g key={`marker-${m.fret}`}>
-              <circle cx={x} cy={markersY1} r={4} fill="#2A2A2A" />
-              <circle cx={x} cy={markersY2} r={4} fill="#2A2A2A" />
+              <circle cx={x} cy={markersY1} r={4} fill="var(--color-rule)" />
+              <circle cx={x} cy={markersY2} r={4} fill="var(--color-rule)" />
             </g>
           );
         }
@@ -72,7 +72,7 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
             cx={x}
             cy={(stringY(2) + stringY(3)) / 2}
             r={4}
-            fill="#2A2A2A"
+            fill="var(--color-rule)"
           />
         );
       })}
@@ -88,8 +88,9 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
             x2={x}
             y1={stringY(5)}
             y2={stringY(0)}
-            stroke={isNut ? '#FFFFFF' : '#2A2A2A'}
+            stroke="var(--color-ink)"
             strokeWidth={isNut ? 4 : 1}
+            opacity={isNut ? 1 : 0.45}
           />
         );
       })}
@@ -102,8 +103,9 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
           x2={width - paddingX}
           y1={stringY(i)}
           y2={stringY(i)}
-          stroke="#888888"
+          stroke="var(--color-ink)"
           strokeWidth={0.75 + (STRING_COUNT - 1 - i) * 0.25}
+          opacity={0.7}
         />
       ))}
 
@@ -118,8 +120,9 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
             y={16}
             textAnchor="middle"
             fontSize={11}
-            fontWeight={700}
-            fill={highlighted ? '#888888' : '#555555'}
+            fontWeight={600}
+            fill="var(--color-ink-2)"
+            opacity={highlighted ? 1 : 0.6}
             fontFamily="JetBrains Mono, monospace"
           >
             {f}
@@ -134,31 +137,20 @@ const Fretboard = ({ positions, startFret, endFret }: FretboardProps) => {
           const cx = noteX(p.fret);
           const cy = stringY(p.string);
           const fill = p.isRoot
-            ? '#F5A623'
+            ? 'var(--color-accent)'
             : p.isBlueNote
-              ? '#4FA3E3'
-              : '#FFFFFF';
-          const textFill = p.isRoot
-            ? '#472A00'
-            : p.isBlueNote
-              ? '#0D2638'
-              : '#0D0D0D';
+              ? 'var(--color-brass)'
+              : 'var(--color-ink)';
+          const textFill = 'var(--color-paper)';
           return (
             <g key={`pos-${p.string}-${p.fret}`}>
-              <circle
-                cx={cx}
-                cy={cy}
-                r={13}
-                fill={fill}
-                stroke="#0D0D0D"
-                strokeWidth={2}
-              />
+              <circle cx={cx} cy={cy} r={13} fill={fill} />
               <text
                 x={cx}
                 y={cy + 4}
                 textAnchor="middle"
                 fontSize={10}
-                fontWeight={p.isRoot ? 900 : 700}
+                fontWeight={p.isRoot ? 700 : 600}
                 fill={textFill}
                 fontFamily="JetBrains Mono, monospace"
               >

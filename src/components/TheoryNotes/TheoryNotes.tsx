@@ -5,6 +5,7 @@ import {
   getKeySignature,
   getRelativeKey,
 } from '../../utils/musicTheory';
+import TagLabel from '../shared/TagLabel/TagLabel';
 
 interface TheoryNotesProps {
   selectedRoot: Note;
@@ -12,10 +13,7 @@ interface TheoryNotesProps {
   scaleType: ScaleType;
 }
 
-const formatAccidentals = (
-  sharps: string[],
-  flats: string[],
-): string => {
+const formatAccidentals = (sharps: string[], flats: string[]): string => {
   if (sharps.length === 0 && flats.length === 0) {
     return 'this key has no sharps or flats';
   }
@@ -33,6 +31,13 @@ const formatAccidentals = (
 
 const modeLabel = (mode: ScaleMode) => (mode === 'major' ? 'Major' : 'minor');
 
+const cardStyle: React.CSSProperties = {
+  background: 'var(--color-paper-2)',
+  border: '1px solid var(--color-rule)',
+  borderRadius: 'var(--radius-md)',
+  padding: 28,
+};
+
 const TheoryNotes = ({ selectedRoot, scaleMode, scaleType }: TheoryNotesProps) => {
   const scaleName = SCALE_DISPLAY_NAMES[scaleType];
   const pattern = getIntervalPattern(scaleType);
@@ -46,29 +51,58 @@ const TheoryNotes = ({ selectedRoot, scaleMode, scaleType }: TheoryNotesProps) =
     scaleMode === 'major' ? 'relative minor' : 'relative major';
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="bg-surface rounded-2xl border border-border/10 p-8 shadow-lg">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-accent mb-4">
-          Theory Note
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div style={cardStyle}>
+        <TagLabel color="var(--color-accent)">Theory note</TagLabel>
+        <h3
+          className="serif mt-2"
+          style={{ fontSize: 28, lineHeight: 1.05 }}
+        >
+          The interval pattern.
         </h3>
-        <p className="text-text-secondary text-base leading-relaxed">
-          The {scaleName} scale follows the interval pattern:{' '}
-          <span className="text-text-primary font-bold">{pattern}</span>. For{' '}
-          {selectedRoot} {modeLabel(scaleMode)}, {accidentals}.
+        <p
+          className="mt-3"
+          style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--color-ink-2)' }}
+        >
+          The {scaleName} scale follows{' '}
+          <span
+            className="font-mono"
+            style={{
+              color: 'var(--color-ink)',
+              letterSpacing: '0.05em',
+              fontWeight: 600,
+            }}
+          >
+            {pattern}
+          </span>
+          . For {selectedRoot} {modeLabel(scaleMode)}, {accidentals}.
         </p>
-        <p className="text-text-muted text-xs mt-3">
-          W = whole step / whole tone (2 frets) · H = half step / semitone (1
-          fret) · WH = minor third (3 frets)
+        <p
+          className="mt-3"
+          style={{ fontSize: 11, color: 'var(--color-ink-2)', opacity: 0.75 }}
+        >
+          W = whole step (2 frets) · H = half step (1 fret) · WH = minor third
+          (3 frets)
         </p>
       </div>
 
-      <div className="bg-surface rounded-2xl border border-border/10 p-8 shadow-lg">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-accent mb-4">
-          {relativeHeader}
+      <div style={cardStyle}>
+        <TagLabel color="var(--color-accent)">{relativeHeader}</TagLabel>
+        <h3
+          className="serif mt-2"
+          style={{ fontSize: 28, lineHeight: 1.05 }}
+        >
+          Same notes, different home.
         </h3>
-        <p className="text-text-secondary text-base leading-relaxed">
+        <p
+          className="mt-3"
+          style={{ fontSize: 14, lineHeight: 1.7, color: 'var(--color-ink-2)' }}
+        >
           The {relativeDirection} of {selectedRoot} {modeLabel(scaleMode)} is{' '}
-          <span className="text-text-primary font-bold">
+          <span
+            className="serif"
+            style={{ color: 'var(--color-ink)', fontSize: 18 }}
+          >
             {relative.root} {modeLabel(relative.mode)}
           </span>
           . They share the same key signature but start on a different tonal
