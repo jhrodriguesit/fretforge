@@ -125,7 +125,7 @@ const ScalesView = () => {
           className="serif mt-2.5 text-4xl sm:text-5xl md:text-[56px]"
           style={{ lineHeight: 0.98, letterSpacing: '-0.01em' }}
         >
-          <span style={{ color: 'var(--color-accent)' }}>{root}</span>{' '}
+          <span style={{ color: 'var(--color-accent)' }}>{getKeySpelling(root, scaleMode)[0]}</span>{' '}
           {SCALE_TITLE[tab]}{' '}
           <span style={{ fontStyle: 'italic' }}>— five shapes.</span>
         </h1>

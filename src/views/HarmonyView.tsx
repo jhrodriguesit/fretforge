@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Note } from '../data/notes';
 import type { ScaleMode } from '../types/music';
 import { getHarmonicField } from '../utils/musicTheory';
+import { getKeySpelling } from '../data/keySignatures';
 import RootSelector from '../components/RootSelector/RootSelector';
 import ScaleModeToggle from '../components/ScaleModeToggle/ScaleModeToggle';
 import HarmonicField from '../components/HarmonicField/HarmonicField';
@@ -33,6 +34,7 @@ const HarmonyView = () => {
   const [mode, setMode] = useState<ScaleMode>('major');
   const field = useMemo(() => getHarmonicField(root, mode), [root, mode]);
   const fns = mode === 'major' ? FUNCTIONS_MAJ : FUNCTIONS_MIN;
+  const rootLabel = getKeySpelling(root, mode)[0];
 
   return (
     <div style={{ background: 'var(--color-paper)' }} className="min-h-screen">
@@ -44,7 +46,7 @@ const HarmonyView = () => {
         >
           The harmonic field{' '}
           <span style={{ fontStyle: 'italic', color: 'var(--color-accent)' }}>
-            of {root} {modeLabel(mode)}.
+            of {rootLabel} {modeLabel(mode)}.
           </span>
         </h1>
         <p
