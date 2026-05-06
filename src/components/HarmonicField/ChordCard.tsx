@@ -35,7 +35,7 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
   const accentColor = active ? 'var(--color-accent)' : 'var(--color-ink-2)';
   const headingColor = active ? 'var(--color-accent)' : 'var(--color-ink)';
 
-  const { playChord } = useAudio();
+  const { playChord, isLoading, isFailed } = useAudio();
   const handlePlay = () => {
     if (current) playChord(voicingToPitches(current));
   };
@@ -112,6 +112,8 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
         <PlayButton
           onClick={handlePlay}
           disabled={!current}
+          loading={isLoading}
+          unavailable={isFailed}
           ariaLabel={`Play ${degree.displayName} chord`}
         />
       </div>

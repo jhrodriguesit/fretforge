@@ -1,14 +1,24 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as audioEngine from '../utils/audioEngine';
 
 export const useAudio = () => {
-  const [isReady, setIsReady] = useState(false);
+  const [status, setStatus] = useState(audioEngine.getStatus());
+
+  useEffect(() => audioEngine.subscribe(setStatus), []);
 
   const playChord = useCallback(async (notes: string[]) => {
-    await audioEngine.ensureAudioContext();
-    setIsReady(true);
-    audioEngine.playChord(notes);
+    try {
+      await audioEngine.ensureAudio();
+      audioEngine.playChord(notes);
+    } catch {
+      // status will already be 'failed' via subscriber
+    }
   }, []);
 
-  return { playChord, isReady };
+  return {
+    playChord,
+    isReady: status === 'ready',
+    isLoading: status === 'loading',
+    isFailed: status === 'failed',
+  };
 };
