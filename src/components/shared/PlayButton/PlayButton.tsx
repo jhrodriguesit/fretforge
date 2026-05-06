@@ -9,26 +9,36 @@ const PlayButton = ({
   disabled = false,
   ariaLabel = 'Play chord',
 }: PlayButtonProps) => {
+  const enabledStyle = {
+    border: '1px solid var(--color-ink)',
+    background: 'var(--color-accent)',
+    color: 'var(--color-paper)',
+  };
+  const disabledStyle = {
+    border: '1px solid var(--color-rule)',
+    background: 'var(--color-paper-2)',
+    color: 'var(--color-ink-2)',
+  };
+
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}
-      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
-        disabled
-          ? 'bg-surface-elevated text-text-secondary cursor-not-allowed'
-          : 'bg-accent text-accent-text hover:scale-110 shadow-lg shadow-accent-glow'
+      className={`w-9 h-9 rounded-full flex items-center justify-center transition-[filter] ${
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer hover:brightness-95'
       }`}
+      style={disabled ? disabledStyle : enabledStyle}
     >
       <svg
         viewBox="0 0 24 24"
-        width="18"
-        height="18"
+        width="14"
+        height="14"
         fill="currentColor"
         aria-hidden="true"
       >
-        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.06A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06A7.01 7.01 0 0 1 19 12a7.01 7.01 0 0 1-5 6.71v2.06A9 9 0 0 0 21 12a9 9 0 0 0-7-8.77z" />
+        <path d="M8 5v14l11-7z" />
       </svg>
     </button>
   );
