@@ -15,7 +15,7 @@ npm run lint     # ESLint
 
 ```
 src/
-├── App.tsx                  # Hash router → Landing / HarmonyView / ScalesView
+├── App.tsx                  # Hash router → Landing / HarmonyView / ScalesView / EarTrainingView
 ├── index.css                # Tailwind @theme + :root radius vars + .serif utility
 ├── hooks/
 │   ├── useHashRoute.ts      # tiny hashchange hook + navTo(path)
@@ -27,15 +27,18 @@ src/
 │   ├── keySignatures.ts     # Key → sharps/flats
 │   ├── harmonicField.ts     # NUMERALS_BY_MODE, QUALITIES_BY_MODE
 │   ├── chords.ts            # CHORD_DATABASE: voicings per chord name
-│   └── scales.ts            # ScaleType, SCALE_INTERVALS, CAGED_SHAPES
+│   ├── scales.ts            # ScaleType, SCALE_INTERVALS, CAGED_SHAPES
+│   └── progressions.ts      # PROGRESSIONS_MAJOR/_MINOR templates for Ear Training
 ├── utils/
 │   ├── musicTheory.ts       # getHarmonicField, getKeySignature, getRelativeKey, getIntervalPattern
-│   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE, getNoteAtFret
-│   └── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
+│   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE, getNoteAtFret, voicingToPitches
+│   ├── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
+│   └── exerciseGenerator.ts # generateRound, findValidKeys, findNearMissDistractors, degreesForKey
 ├── types/music.ts           # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── views/
 │   ├── HarmonyView.tsx      # Page header + RootSelector + ScaleModeToggle + HarmonicField
-│   └── ScalesView.tsx       # Page header + RootSelector + ChipGroup + 5-shape grid + TheoryNotes
+│   ├── ScalesView.tsx       # Page header + RootSelector + ChipGroup + 5-shape grid + TheoryNotes
+│   └── EarTrainingView.tsx  # Page header + StreakBadge + ProgressionDisplay + KeyOptions + Reveal
 └── components/              # Feature folders: Name/Name.tsx + Name.test.tsx
     ├── Header/              # AppNav: Wordmark + nav links, accent on active
     ├── Landing/             # Hero, section cards, how-to-use, footer
@@ -45,6 +48,7 @@ src/
     ├── ScaleExplorer/
     │   └── CompactFretboard.tsx  # Horizontal SVG, always 5 frets, optional open column when shape touches fret 0
     ├── TheoryNotes/         # Interval pattern + relative key cards
+    ├── EarTraining/         # ProgressionDisplay, KeyOptions, Reveal, StreakBadge
     └── shared/
         ├── Wordmark/        # LogoMark (ink tile + italic F) + serif wordmark
         ├── ForgeButton/     # Black pill, mono caps, primary/ghost/accent
@@ -62,7 +66,7 @@ src/
 - Phase 4 ✓ TheoryNotes: interval pattern + key signature + relative major/minor
 - Editorial redesign ✓ Paper/ink/rust theme, Landing page + hash routing (`#/`, `#/harmony`, `#/scales`), horizontal scales fretboards with open-string column, neck-spread shape distribution
 - Phase 5 ✓ Audio Engine — Tone.Sampler (nylon guitar), strum humanization, `useAudio` hook wired to PlayButton on chord cards
-- Phase 6 not started (Practice / Ear Training Mode)
+- Phase 6 ✓ Ear Training — 3–4 chord progression from a random key, 4-way multiple choice (must select all valid keys, no distractors), near-miss distractors, per-key degree-mapping reveal, streak counter with `bestStreak` in localStorage. Route: `#/ear-training`.
 
 ## Routing
 

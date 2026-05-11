@@ -90,7 +90,8 @@ src/
 ├── types/music.ts           # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── views/
 │   ├── HarmonyView.tsx
-│   └── ScalesView.tsx
+│   ├── ScalesView.tsx
+│   └── EarTrainingView.tsx
 └── components/              # Feature folders: Name/Name.tsx + Name.test.tsx
     ├── Header/              # AppNav (Wordmark + nav links, active accent)
     ├── Landing/             # Hero + section cards + how-to-use + footer
@@ -100,6 +101,7 @@ src/
     ├── ScaleExplorer/
     │   └── CompactFretboard.tsx   # Horizontal 5-fret SVG with optional open column
     ├── TheoryNotes/
+    ├── EarTraining/         # ProgressionDisplay, KeyOptions, Reveal, StreakBadge
     └── shared/
         ├── Wordmark/
         ├── ForgeButton/
@@ -127,4 +129,4 @@ Low → High: E2, A2, D3, G3, B3, E4. String index 0 = low E in our codebase.
 - [x] Phase 4: Theory Notes
 - [x] Editorial redesign — paper/ink/rust theme, Landing page, hash routing, horizontal scale fretboards with open-string column, neck-spread shape distribution
 - [x] Phase 5: Audio Engine (Tone.js) — nylon guitar Sampler, strum humanization, `useAudio` hook, PlayButton wired up
-- [ ] Phase 6: Practice / Ear Training Mode
+- [x] Phase 6: Ear Training — randomly generated 3–4 chord progressions, multiple-choice key identification, near-miss distractors, per-key degree-mapping reveal, streak counter with `bestStreak` in localStorage

@@ -27,6 +27,13 @@ const CARDS: SectionCard[] = [
     link: 'scales',
     cta: 'Open scales',
   },
+  {
+    n: '03',
+    title: 'Ear Training',
+    body: 'Listen to a short progression and name the key. Multiple choice, instant reveal of which chord is which degree, streak counter to keep you honest.',
+    link: 'ear-training',
+    cta: 'Open ear training',
+  },
 ];
 
 const Card = ({ card }: { card: SectionCard }) => {
@@ -137,6 +144,9 @@ const Landing = () => (
         <ForgeButton variant="ghost" onClick={() => navTo('scales')}>
           Browse scales
         </ForgeButton>
+        <ForgeButton variant="ghost" onClick={() => navTo('ear-training')}>
+          Train your ear
+        </ForgeButton>
       </div>
     </div>
 
@@ -147,7 +157,7 @@ const Landing = () => (
     >
       <div
         className="grid gap-3"
-        style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}
+        style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}
       >
         {CARDS.map((c) => (
           <Card key={c.n} card={c} />

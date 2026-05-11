@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import Landing from './components/Landing/Landing';
 import HarmonyView from './views/HarmonyView';
 import ScalesView from './views/ScalesView';
+import EarTrainingView from './views/EarTrainingView';
 
 const App = () => {
   const route = useHashRoute();
@@ -20,6 +21,14 @@ const App = () => {
       <>
         <Header active="scales" />
         <ScalesView />
+      </>
+    );
+  }
+  if (route === 'ear-training') {
+    return (
+      <>
+        <Header active="ear-training" />
+        <EarTrainingView />
       </>
     );
   }

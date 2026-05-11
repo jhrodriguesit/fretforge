@@ -17,7 +17,7 @@ I built FretForge using [Claude Code](https://claude.ai/code) — Anthropic's CL
 
 ## Features
 
-- **Landing page** with hero, section cards, and "how to use it" guide. Hash-based client-side routing (`#/`, `#/harmony`, `#/scales`) — refresh-safe, no server, no router dependency.
+- **Landing page** with hero, section cards, and "how to use it" guide. Hash-based client-side routing (`#/`, `#/harmony`, `#/scales`, `#/ear-training`) — refresh-safe, no server, no router dependency.
 - **Harmony view** — pick a root note + Major/Minor; see the seven diatonic chords as a degree summary row plus a chord-card grid (each with an SVG chord diagram, function label, and the tonic highlighted in rust). A "progressions to try" cell lists common patterns (I-V-vi-IV, ii-V-I, etc.) using the live key.
 - **Scales view** — pick a root + scale (major, minor, major/minor pentatonic, blues). Renders the five CAGED-style shapes simultaneously across the neck, each as a horizontal SVG fretboard with:
   - Always 5 frets shown.
@@ -27,6 +27,7 @@ I built FretForge using [Claude Code](https://claude.ai/code) — Anthropic's CL
   - Root in rust, scale tones in ink, blue note (♭5) in brass for the blues scale.
 - **Theory Notes** below the Scales grid — interval pattern + key signature card, and a relative major/minor card that shares the same key signature.
 - **Audio playback** — each chord card has a play button that strums the voicing using a nylon guitar sampler (Tone.js). Samples load lazily on first interaction; the button shows loading/unavailable states.
+- **Ear Training** — listen to a 3–4 chord progression in a random key and pick every key whose harmonic field fits. Multiple-choice (must select all valid keys, no distractors), near-miss distractors built from keys that share all-but-one chord with the progression, and a reveal showing the full I–vii° harmonic field for each valid key with the played degrees highlighted. Streak counter with `bestStreak` persisted to localStorage.
 
 ## Design System
 
@@ -72,22 +73,22 @@ npm run lint     # ESLint
 
 ```
 src/
-├── App.tsx                  # Hash router → Landing / HarmonyView / ScalesView
+├── App.tsx                  # Hash router → Landing / HarmonyView / ScalesView / EarTrainingView
 ├── index.css                # Tailwind @theme — design tokens + radius vars
-├── hooks/
-│   └── useHashRoute.ts      # tiny hashchange-listening hook + navTo()
-├── data/                    # Pure music-theory data
 ├── hooks/
 │   ├── useHashRoute.ts      # hashchange hook + navTo()
 │   └── useAudio.ts          # wraps audioEngine — exposes playChord, isReady/isLoading/isFailed
+├── data/                    # Pure music-theory data (notes, intervals, scales, chords, progressions, …)
 ├── utils/
 │   ├── musicTheory.ts       # getHarmonicField(root, mode), getKeySignature, etc.
 │   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE
-│   └── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
+│   ├── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
+│   └── exerciseGenerator.ts # Ear-training round generation: findValidKeys, near-miss distractors, degree mapping
 ├── types/                   # Shared TypeScript types
 ├── views/
 │   ├── HarmonyView.tsx      # Page header + RootSelector + ScaleModeToggle + HarmonicField
-│   └── ScalesView.tsx       # Page header + RootPicker + ChipGroup + 5-shape grid + TheoryNotes
+│   ├── ScalesView.tsx       # Page header + RootPicker + ChipGroup + 5-shape grid + TheoryNotes
+│   └── EarTrainingView.tsx  # Page header + StreakBadge + ProgressionDisplay + KeyOptions + Reveal
 └── components/              # Feature folders (Name/Name.tsx + Name.test.tsx)
     ├── Header/              # AppNav with active route accent
     ├── Landing/             # Hero, section cards, how-to-use, footer
@@ -97,6 +98,7 @@ src/
     ├── ScaleExplorer/
     │   └── CompactFretboard.tsx  # Horizontal SVG fretboard, 5 frets, optional open column
     ├── TheoryNotes/         # Interval pattern + relative key info cards
+    ├── EarTraining/         # ProgressionDisplay, KeyOptions, Reveal (full harmonic field with played degrees highlighted), StreakBadge
     └── shared/
         ├── Wordmark/        # LogoMark (ink tile + italic F) + serif wordmark
         ├── ForgeButton/     # Black pill, mono caps, primary/ghost/accent variants
@@ -125,4 +127,4 @@ Every push to `main` triggers `.github/workflows/deploy.yml`, which builds and p
 - [x] Phase 4: Theory Notes
 - [x] Editorial redesign — paper/ink/rust theme, Landing page, hash routing, horizontal scale fretboards with open-string column, neck-spread shape distribution
 - [x] Phase 5: Audio Engine (Tone.js) — nylon guitar Sampler, strum humanization, `useAudio` hook, PlayButton wired up
-- [ ] Phase 6: Practice / Ear Training Mode
+- [x] Phase 6: Ear Training — 3–4 chord progressions, multiple-choice key identification, near-miss distractors, harmonic-field reveal with played degrees highlighted, streak counter with `bestStreak` in localStorage
