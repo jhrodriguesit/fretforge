@@ -8,6 +8,7 @@ interface HeaderProps {
 const ITEMS: Array<[string, string]> = [
   ['harmony', 'Harmony'],
   ['scales', 'Scales'],
+  ['ear-training', 'Ear Training'],
 ];
 
 const Header = ({ active }: HeaderProps) => (
