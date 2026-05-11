@@ -15,6 +15,7 @@ An editorial, reference-style web app for guitar players to study music theory t
   - Note names inside every dot, with key-aware enharmonic spelling (e.g. B♭ in D minor, not A♯).
   - Root in rust, scale tones in ink, blue note (♭5) in brass for the blues scale.
 - **Theory Notes** below the Scales grid — interval pattern + key signature card, and a relative major/minor card that shares the same key signature.
+- **Audio playback** — each chord card has a play button that strums the voicing using a nylon guitar sampler (Tone.js). Samples load lazily on first interaction; the button shows loading/unavailable states.
 
 ## Design System
 
@@ -65,9 +66,13 @@ src/
 ├── hooks/
 │   └── useHashRoute.ts      # tiny hashchange-listening hook + navTo()
 ├── data/                    # Pure music-theory data
+├── hooks/
+│   ├── useHashRoute.ts      # hashchange hook + navTo()
+│   └── useAudio.ts          # wraps audioEngine — exposes playChord, isReady/isLoading/isFailed
 ├── utils/
 │   ├── musicTheory.ts       # getHarmonicField(root, mode), getKeySignature, etc.
-│   └── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE
+│   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE
+│   └── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
 ├── types/                   # Shared TypeScript types
 ├── views/
 │   ├── HarmonyView.tsx      # Page header + RootSelector + ScaleModeToggle + HarmonicField
@@ -86,7 +91,7 @@ src/
         ├── ForgeButton/     # Black pill, mono caps, primary/ghost/accent variants
         ├── TagLabel/        # Mono uppercase section tag
         ├── ChipGroup/       # Generic mono-caps chip selector
-        ├── PlayButton/      # Disabled placeholder until Phase 5 audio
+        ├── PlayButton/      # Rust pill — play/loading/unavailable states, wired via useAudio
         └── VoicingNav/      # Cycle voicings per chord card
 ```
 
@@ -108,5 +113,5 @@ Every push to `main` triggers `.github/workflows/deploy.yml`, which builds and p
 - [x] Phase 3: Scale Explorer + Fretboard Visualization
 - [x] Phase 4: Theory Notes
 - [x] Editorial redesign — paper/ink/rust theme, Landing page, hash routing, horizontal scale fretboards with open-string column, neck-spread shape distribution
-- [ ] Phase 5: Audio Engine (Tone.js)
+- [x] Phase 5: Audio Engine (Tone.js) — nylon guitar Sampler, strum humanization, `useAudio` hook, PlayButton wired up
 - [ ] Phase 6: Practice / Ear Training Mode
