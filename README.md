@@ -4,6 +4,15 @@ An editorial, reference-style web app for guitar players to study music theory t
 
 **Live demo:** [jhrodriguesit.github.io/FretForge](https://jhrodriguesit.github.io/FretForge/)
 
+## Built with Claude
+
+I built FretForge using [Claude Code](https://claude.ai/code) — Anthropic's CLI-based AI development environment — from initial planning through every shipped phase. The repository includes several Claude-specific artifacts that reflect how that workflow operated:
+
+- **`CLAUDE.md`** — A project instruction file loaded automatically into every Claude Code session. It encodes the app architecture, component conventions, design tokens, routing logic, and scale-shape algorithm so every session starts with full context.
+- **`PLANNING.md`** — A detailed specification generated with Claude before a single line of code was written. It covers the full feature breakdown, component tree, design system, hash-routing approach, and SVG fretboard rendering spec — used as the authoritative reference throughout all five phases.
+- **`.claude/settings.local.json`** — A permission allowlist for `npm`, `git`, and `gh` CLI commands, configured to reduce confirmation prompts during active development and keep the feedback loop tight.
+- **`.claude/skills/grill-me`** — A custom slash-command skill (`/grill-me`) that runs structured design interviews, walking down each decision branch one at a time to stress-test plans before implementation begins.
+
 ## Features
 
 - **Landing page** with hero, section cards, and "how to use it" guide. Hash-based client-side routing (`#/`, `#/harmony`, `#/scales`) — refresh-safe, no server, no router dependency.
