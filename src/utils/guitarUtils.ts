@@ -6,10 +6,13 @@ import {
 } from '../data/scales';
 import { getKeySpelling } from '../data/keySignatures';
 import { nameToPitchClass, type NoteName } from '../data/noteNames';
-import type { ScaleMode } from '../types/music';
+import type { ChordVoicing, ScaleMode } from '../types/music';
 
 /** Standard tuning, low-to-high: E A D G B E. Index = string number. */
 const STRING_OPEN_PC: Note[] = ['E', 'A', 'D', 'G', 'B', 'E'];
+
+/** MIDI numbers for open strings, low-to-high: E2, A2, D3, G3, B3, E4. */
+const STRING_OPEN_MIDI = [40, 45, 50, 55, 59, 64] as const;
 
 const FRETBOARD_WINDOW = 8;
 
@@ -115,6 +118,23 @@ export const getScalePositions = (
   const startFret = Math.max(0, rootFret + shape.startOffset);
   const endFret = rootFret + shape.endOffset;
   return getScalePositionsInRange(root, scaleType, startFret, endFret);
+};
+
+/**
+ * Map a chord voicing's frets to pitched note strings (e.g. "E2", "G#3"),
+ * using standard tuning and sharp spellings. Muted strings (-1) are skipped.
+ */
+export const voicingToPitches = (voicing: ChordVoicing): string[] => {
+  const pitches: string[] = [];
+  for (let s = 0; s < voicing.frets.length && s < 6; s++) {
+    const fret = voicing.frets[s];
+    if (fret < 0) continue;
+    const midi = STRING_OPEN_MIDI[s] + fret;
+    const pc = midi % 12;
+    const octave = Math.floor(midi / 12) - 1;
+    pitches.push(`${CHROMATIC_NOTES[pc]}${octave}`);
+  }
+  return pitches;
 };
 
 /**

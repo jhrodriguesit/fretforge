@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { CHORD_DATABASE } from '../../data/chords';
 import type { HarmonicFieldDegree } from '../../types/music';
+import { useAudio } from '../../hooks/useAudio';
+import { voicingToPitches } from '../../utils/guitarUtils';
+import PlayButton from '../shared/PlayButton/PlayButton';
 import VoicingNav from '../shared/VoicingNav/VoicingNav';
 import ChordDiagram from './ChordDiagram';
 
@@ -31,6 +34,11 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
 
   const accentColor = active ? 'var(--color-accent)' : 'var(--color-ink-2)';
   const headingColor = active ? 'var(--color-accent)' : 'var(--color-ink)';
+
+  const { playChord, isLoading, isFailed } = useAudio();
+  const handlePlay = () => {
+    if (current) playChord(voicingToPitches(current));
+  };
 
   return (
     <div
@@ -89,8 +97,8 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
         )}
       </div>
 
-      {voicings.length > 1 && (
-        <div className="flex items-center justify-between mt-2">
+      <div className="flex items-center justify-between mt-2 min-h-9">
+        {voicings.length > 1 ? (
           <VoicingNav
             current={voicingIndex}
             total={voicings.length}
@@ -98,8 +106,17 @@ const ChordCard = ({ degree, active = false }: ChordCardProps) => {
               setSelected({ chordName: degree.chordName, index: i })
             }
           />
-        </div>
-      )}
+        ) : (
+          <span />
+        )}
+        <PlayButton
+          onClick={handlePlay}
+          disabled={!current}
+          loading={isLoading}
+          unavailable={isFailed}
+          ariaLabel={`Play ${degree.displayName} chord`}
+        />
+      </div>
     </div>
   );
 };

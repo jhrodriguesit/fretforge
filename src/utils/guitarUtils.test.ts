@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { getFretRange, getNoteAtFret, getScalePositions } from './guitarUtils';
+import {
+  getFretRange,
+  getNoteAtFret,
+  getScalePositions,
+  voicingToPitches,
+} from './guitarUtils';
 import { CAGED_SHAPES } from '../data/scales';
 import type { Note } from '../data/notes';
 
@@ -159,5 +164,39 @@ describe('getFretRange', () => {
     expect(endFret).toBeGreaterThan(shapeEnd);
     expect(shapeStart - startFret).toBeGreaterThanOrEqual(1);
     expect(endFret - shapeEnd).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe('voicingToPitches', () => {
+  it('maps open Em voicing to E2..E4', () => {
+    expect(
+      voicingToPitches({
+        frets: [0, 2, 2, 0, 0, 0],
+        fingers: [0, 2, 3, 0, 0, 0],
+        baseFret: 1,
+      }),
+    ).toEqual(['E2', 'B2', 'E3', 'G3', 'B3', 'E4']);
+  });
+
+  it('skips muted strings and starts on the lowest sounded pitch', () => {
+    const pitches = voicingToPitches({
+      frets: [-1, 3, 5, 5, 5, 3],
+      fingers: [0, 1, 3, 4, 2, 1],
+      baseFret: 3,
+      barres: [3],
+    });
+    expect(pitches[0]).toBe('C3');
+    expect(pitches).toHaveLength(5);
+  });
+
+  it('handles barre F at fret 1 with sharp spelling', () => {
+    const pitches = voicingToPitches({
+      frets: [1, 3, 3, 2, 1, 1],
+      fingers: [1, 3, 4, 2, 1, 1],
+      baseFret: 1,
+      barres: [1],
+    });
+    expect(pitches[0]).toBe('F2');
+    expect(pitches[3]).toBe('A3');
   });
 });
