@@ -18,7 +18,8 @@ src/
 ├── App.tsx                  # Hash router → Landing / HarmonyView / ScalesView
 ├── index.css                # Tailwind @theme + :root radius vars + .serif utility
 ├── hooks/
-│   └── useHashRoute.ts      # tiny hashchange hook + navTo(path)
+│   ├── useHashRoute.ts      # tiny hashchange hook + navTo(path)
+│   └── useAudio.ts          # wraps audioEngine — exposes playChord, isReady, isLoading, isFailed
 ├── data/                    # Pure music-theory data
 │   ├── notes.ts             # CHROMATIC_NOTES + Note type
 │   ├── intervals.ts
@@ -29,7 +30,8 @@ src/
 │   └── scales.ts            # ScaleType, SCALE_INTERVALS, CAGED_SHAPES
 ├── utils/
 │   ├── musicTheory.ts       # getHarmonicField, getKeySignature, getRelativeKey, getIntervalPattern
-│   └── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE, getNoteAtFret
+│   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE, getNoteAtFret
+│   └── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
 ├── types/music.ts           # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── views/
 │   ├── HarmonyView.tsx      # Page header + RootSelector + ScaleModeToggle + HarmonicField
@@ -48,7 +50,7 @@ src/
         ├── ForgeButton/     # Black pill, mono caps, primary/ghost/accent
         ├── TagLabel/        # Mono uppercase section tag
         ├── ChipGroup/       # Generic mono-caps chip selector
-        ├── PlayButton/      # Disabled until Phase 5
+        ├── PlayButton/      # Rust pill — play/loading/unavailable states, wired via useAudio
         └── VoicingNav/      # Cycle voicings per chord card
 ```
 
@@ -59,7 +61,8 @@ src/
 - Phase 3 ✓ Scale rendering with 5 CAGED-style shapes; key-aware enharmonic spelling (Bb in D minor, not A#)
 - Phase 4 ✓ TheoryNotes: interval pattern + key signature + relative major/minor
 - Editorial redesign ✓ Paper/ink/rust theme, Landing page + hash routing (`#/`, `#/harmony`, `#/scales`), horizontal scales fretboards with open-string column, neck-spread shape distribution
-- Phase 5+ not started (Audio, Practice/Ear-training Mode)
+- Phase 5 ✓ Audio Engine — Tone.Sampler (nylon guitar), strum humanization, `useAudio` hook wired to PlayButton on chord cards
+- Phase 6 not started (Practice / Ear Training Mode)
 
 ## Routing
 

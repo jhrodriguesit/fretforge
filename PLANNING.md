@@ -86,7 +86,7 @@ src/
 ├── utils/
 │   ├── musicTheory.ts       # getHarmonicField, getKeySignature, getRelativeKey, getIntervalPattern
 │   ├── guitarUtils.ts       # getScalePositions, getScalePositionsInRange, rootFretOnLowE, getNoteAtFret
-│   └── audioEngine.ts       # (Phase 5, not started — NO tests)
+│   └── audioEngine.ts       # Tone.Sampler wrapper — load/play/subscribe, NO tests
 ├── types/music.ts           # Note, ScaleMode, ChordVoicing, HarmonicFieldDegree
 ├── views/
 │   ├── HarmonyView.tsx
@@ -105,7 +105,7 @@ src/
         ├── ForgeButton/
         ├── TagLabel/
         ├── ChipGroup/
-        ├── PlayButton/      # disabled until Phase 5
+        ├── PlayButton/      # rust pill with play/loading/unavailable states (Phase 5)
         └── VoicingNav/
 ```
 
@@ -126,5 +126,5 @@ Low → High: E2, A2, D3, G3, B3, E4. String index 0 = low E in our codebase.
 - [x] Phase 3: Scale Explorer + Fretboard Visualization
 - [x] Phase 4: Theory Notes
 - [x] Editorial redesign — paper/ink/rust theme, Landing page, hash routing, horizontal scale fretboards with open-string column, neck-spread shape distribution
-- [ ] Phase 5: Audio Engine (Tone.js)
+- [x] Phase 5: Audio Engine (Tone.js) — nylon guitar Sampler, strum humanization, `useAudio` hook, PlayButton wired up
 - [ ] Phase 6: Practice / Ear Training Mode
