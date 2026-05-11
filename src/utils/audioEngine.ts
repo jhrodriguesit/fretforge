@@ -17,6 +17,12 @@ const STRUM_STAGGER = 0.025;
 const STRUM_JITTER = 0.005;
 const FADE_OUT = 0.08;
 
+const randomUnit = (): number => {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] / 0x1_00_00_00_00;
+};
+
 type Status = 'idle' | 'loading' | 'ready' | 'failed';
 
 let sampler: Tone.Sampler | null = null;
@@ -77,9 +83,9 @@ export const playChord = (notes: string[]): void => {
 
   const attackAt = now + FADE_OUT;
   notes.forEach((note, i) => {
-    const jitter = (Math.random() * 2 - 1) * STRUM_JITTER;
+    const jitter = (randomUnit() * 2 - 1) * STRUM_JITTER;
     const time = attackAt + i * STRUM_STAGGER + jitter;
-    const velocity = 0.75 + Math.random() * 0.25;
+    const velocity = 0.75 + randomUnit() * 0.25;
     sampler!.triggerAttack(note, time, velocity);
   });
 };
