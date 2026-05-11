@@ -12,6 +12,7 @@ I built FretForge using [Claude Code](https://claude.ai/code) — Anthropic's CL
 - **`PLANNING.md`** — A detailed specification generated with Claude before a single line of code was written. It covers the full feature breakdown, component tree, design system, hash-routing approach, and SVG fretboard rendering spec — used as the authoritative reference throughout all five phases.
 - **`.claude/settings.local.json`** — A permission allowlist for `npm`, `git`, and `gh` CLI commands, configured to reduce confirmation prompts during active development and keep the feedback loop tight.
 - **`.claude/skills/grill-me`** — A custom slash-command skill (`/grill-me`) that runs structured design interviews, walking down each decision branch one at a time to stress-test plans before implementation begins.
+- **`frontend-design` skill** — The editorial paper/ink/rust visual design — typography system, color tokens, component aesthetics — was conceived and implemented using Claude's built-in frontend design skill, which generates production-grade UI with high design fidelity.
 
 ## Features
 
