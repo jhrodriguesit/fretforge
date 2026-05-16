@@ -84,8 +84,7 @@ const HarmonyView = () => {
       {/* Degree summary row */}
       <div className="max-w-[1200px] mx-auto px-5 sm:px-10 pb-6">
         <div
-          className="grid gap-1.5"
-          style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}
+          className="grid gap-1.5 grid-cols-4 sm:grid-cols-7"
         >
           {field.map((c, i) => {
             const isTonic = i === 0;
