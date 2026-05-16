@@ -10,5 +10,13 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test-setup.ts',
+    coverage: {
+      provider: 'v8',
+      reporter: ['lcov', 'text'],
+      exclude: [
+        'src/utils/audioEngine.ts',
+        'src/test-setup.ts',
+      ],
+    },
   },
 })
