@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   getFretRange,
   getNoteAtFret,
+  getScaleNoteNames,
   getScalePositions,
   voicingToPitches,
 } from './guitarUtils';
@@ -198,5 +199,42 @@ describe('voicingToPitches', () => {
     });
     expect(pitches[0]).toBe('F2');
     expect(pitches[3]).toBe('A3');
+  });
+});
+
+describe('getScaleNoteNames', () => {
+  it('spells G major with a sharp seventh', () => {
+    expect(getScaleNoteNames('G', 'major')).toEqual([
+      'G',
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F#',
+    ]);
+  });
+
+  it('spells F major with a flat fourth', () => {
+    expect(getScaleNoteNames('F', 'major')).toEqual([
+      'F',
+      'G',
+      'A',
+      'Bb',
+      'C',
+      'D',
+      'E',
+    ]);
+  });
+
+  it('includes the correctly spelled flat-5 for A minor blues', () => {
+    expect(getScaleNoteNames('A', 'minorBlues')).toEqual([
+      'A',
+      'C',
+      'D',
+      'Eb',
+      'E',
+      'G',
+    ]);
   });
 });
