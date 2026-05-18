@@ -78,6 +78,18 @@ const buildScaleSpelling = (
   return map;
 };
 
+export const getScaleNoteNames = (
+  root: Note,
+  scaleType: ScaleType,
+): NoteName[] => {
+  const spelling = buildScaleSpelling(root, scaleType);
+  const rootPc = pitchClassIndex(root);
+  return SCALE_INTERVALS[scaleType].map((i) => {
+    const pc = (rootPc + i) % 12;
+    return spelling.get(pc) ?? (CHROMATIC_NOTES[pc] as NoteName);
+  });
+};
+
 export const getScalePositionsInRange = (
   root: Note,
   scaleType: ScaleType,

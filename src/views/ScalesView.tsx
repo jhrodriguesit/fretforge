@@ -3,15 +3,12 @@ import type { Note } from '../data/notes';
 import type { ScaleMode } from '../types/music';
 import {
   CAGED_SHAPES,
-  SCALE_INTERVALS,
   type ScaleTab,
   type ScaleType,
 } from '../data/scales';
 const SHAPE_OFFSETS = CAGED_SHAPES.map((s) => s.startOffset);
-import { getKeySpelling } from '../data/keySignatures';
-import { nameToPitchClass, type NoteName } from '../data/noteNames';
-import { CHROMATIC_NOTES } from '../data/notes';
 import {
+  getScaleNoteNames,
   getScalePositionsInRange,
   rootFretOnLowE,
 } from '../utils/guitarUtils';
@@ -51,33 +48,6 @@ const tabToType = (tab: ScaleTab): ScaleType =>
 const tabToMode = (tab: ScaleTab): ScaleMode =>
   tab === 'major' || tab === 'majorPentatonic' ? 'major' : 'minor';
 
-const flatOfFifth = (fifth: NoteName): NoteName =>
-  fifth.endsWith('#')
-    ? (fifth.slice(0, -1) as NoteName)
-    : (`${fifth}b` as NoteName);
-
-const buildScaleNoteNames = (root: Note, type: ScaleType): NoteName[] => {
-  const mode: ScaleMode =
-    type === 'major' || type === 'majorPentatonic' ? 'major' : 'minor';
-  const fullSpelling = getKeySpelling(root, mode);
-  const rootPc = CHROMATIC_NOTES.indexOf(root);
-  const intervals = SCALE_INTERVALS[type];
-
-  const pcToName = new Map<number, NoteName>();
-  for (const name of fullSpelling) {
-    pcToName.set(CHROMATIC_NOTES.indexOf(nameToPitchClass(name)), name);
-  }
-  if (type === 'minorBlues') {
-    const flatFive = flatOfFifth(fullSpelling[4]);
-    pcToName.set(CHROMATIC_NOTES.indexOf(nameToPitchClass(flatFive)), flatFive);
-  }
-
-  return intervals.map((i) => {
-    const pc = (rootPc + i) % 12;
-    return pcToName.get(pc) ?? (CHROMATIC_NOTES[pc] as NoteName);
-  });
-};
-
 const ScalesView = () => {
   const [root, setRoot] = useState<Note>('A');
   const [tab, setTab] = useState<ScaleTab>('minorPentatonic');
@@ -85,7 +55,7 @@ const ScalesView = () => {
   const scaleMode = tabToMode(tab);
 
   const noteNames = useMemo(
-    () => buildScaleNoteNames(root, scaleType),
+    () => getScaleNoteNames(root, scaleType),
     [root, scaleType],
   );
   const degrees = SCALE_DEGREES[scaleType];
@@ -125,7 +95,7 @@ const ScalesView = () => {
           className="serif mt-2.5 text-4xl sm:text-5xl md:text-[56px]"
           style={{ lineHeight: 0.98, letterSpacing: '-0.01em' }}
         >
-          <span style={{ color: 'var(--color-accent)' }}>{getKeySpelling(root, scaleMode)[0]}</span>{' '}
+          <span style={{ color: 'var(--color-accent)' }}>{noteNames[0]}</span>{' '}
           {SCALE_TITLE[tab]}{' '}
           <span style={{ fontStyle: 'italic' }}>— five shapes.</span>
         </h1>
